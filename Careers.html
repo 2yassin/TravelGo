@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           1. CSS الأساسي للموقع (index.css)
+           ========================================== */
+        :root {
+            --primary: #F4794D;
+            --primary-hover: #E85A28;
+            --secondary: #FBA94C;
+            --bg-main: #0F0E17;
+            --bg-dark: #1A1626;
+            --bg-deep: #24203A;
+            --bg-card: #1E1B2E;
+            --bg-elevated: #2A2640;
+            --text-primary: #FFF7F0;
+            --text-secondary: #A7A9BE;
+            --text-muted: #6B6C7F;
+            --border: #2A2640;
+            --border-light: #3A3650;
+            --shadow-lg: rgba(244, 121, 77, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+        }
+
+        button {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 14, 23, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFFFFE;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            padding: 70px 0 0;
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 320px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 22px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-list i {
+            color: var(--primary);
+            width: 18px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           2. CSS صفحة الوظائف (Careers)
+           ========================================== */
+        .careers-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-deep));
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .careers-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(244, 121, 77, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .careers-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .careers-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        .careers-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Culture Section */
+        .culture-section {
+            padding: 80px 0;
+            background: var(--bg-main);
+        }
+
+        .culture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .culture-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .culture-text p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .culture-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .culture-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 80px 0;
+            background: var(--bg-dark);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(244, 121, 77, 0.3);
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(244, 121, 77, 0.15);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .benefit-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Jobs Section */
+        .jobs-section {
+            padding: 80px 0 100px;
+            background: var(--bg-main);
+        }
+
+        .jobs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .job-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .job-card:hover {
+            border-color: var(--primary);
+            background: var(--bg-elevated);
+        }
+
+        .job-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .job-meta i {
+            color: var(--primary);
+        }
+
+        .btn-apply {
+            background: transparent;
+            border: 1.5px solid var(--border-light);
+            color: var(--text-primary);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-apply:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            color: #FFF;
+        }
+
+        /* No jobs */
+        .no-jobs {
+            text-align: center;
+            padding: 50px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px dashed var(--border);
+        }
+
+        .no-jobs i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Modal (نموذج التقديم) */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 14, 23, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .apply-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active .apply-modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--bg-elevated);
+            border: none;
+            color: var(--text-secondary);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--primary);
+            color: #FFF;
+        }
+
+        .apply-modal h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .apply-modal p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 10px;
+            box-shadow: 0 8px 20px var(--shadow-lg);
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .careers-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .job-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-apply {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .apply-modal {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links,
+            .contact-list li {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ========== Careers Hero ========== -->
+    <!-- <section class="careers-hero">
+        <div class="container">
+            <div class="careers-hero-content">
+                <h1>Join the TravelGo Team</h1>
+                <p>Help us make travel accessible to everyone. Explore our open positions below.</p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- ========== Culture Section ========== -->
+    <section style="margin: 100px 0 40px;" class="culture-section">
+        <div class="container">
+            <div class="culture-grid">
+                <div class="culture-text">
+                    <h2>Our Culture & Mission</h2>
+                    <p>At TravelGo, we believe travel has the power to transform lives. We're a diverse team of travel
+                        enthusiasts, tech innovators, and customer champions working together to make that possible.</p>
+                    <p>We value bold ideas, open communication, and a healthy work-life balance. Whether you're in our
+                        New York office or working remotely from the other side of the world, you'll be part of a team
+                        that genuinely cares about making travel magical.</p>
+                </div>
+                <div class="culture-image">
+                    <img src="img/Home/team work.jpg"
+                        alt="Team working">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Benefits Section ========== -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Work With Us?</h2>
+                <p>We take care of our people so they can take care of our travelers.</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-house-laptop"></i></div>
+                    <h3>Remote-Friendly</h3>
+                    <p>Work from anywhere in the world, whether it's your home or a beach in Bali.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-plane-up"></i></div>
+                    <h3>Travel Perks</h3>
+                    <p>Generous discounts on all TravelGo packages and annual travel stipends.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3>Health Insurance</h3>
+                    <p>Comprehensive health, dental, and vision insurance for you and your family.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>Learning Budget</h3>
+                    <p>$1,000 annual budget for courses, conferences, and books to grow your skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Open Positions ========== -->
+    <section class="jobs-section" id="openings">
+        <div class="container">
+            <div class="section-header">
+                <h2>Open Positions</h2>
+                <p>Find your next role and help us shape the future of travel.</p>
+            </div>
+
+            <div class="jobs-list">
+
+                <!-- Job 1 -->
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>Senior Frontend Developer</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-location-dot"></i> Remote</span>
+                            <span><i class="fa-regular fa-clock"></i> Full-time</span>
+                            <span><i class="fa-solid fa-code"></i> Engineering</span>
+                        </div>
+                    </div>
+                    <button class="btn-apply" onclick="openApplyModal('Senior Frontend Developer')">Apply Now</button>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>Travel Experience Manager</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-location-dot"></i> Dubai, UAE</span>
+                            <span><i class="fa-regular fa-clock"></i> Full-time</span>
+                            <span><i class="fa-solid fa-map-location-dot"></i> Operations</span>
+                        </div>
+                    </div>
+                    <button class="btn-apply" onclick="openApplyModal('Travel Experience Manager')">Apply Now</button>
+                </div>
+
+                <!-- Job 3 -->
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>Customer Support Specialist</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-location-dot"></i> Remote</span>
+                            <span><i class="fa-regular fa-clock"></i> Part-time</span>
+                            <span><i class="fa-solid fa-headset"></i> Support</span>
+                        </div>
+                    </div>
+                    <button class="btn-apply" onclick="openApplyModal('Customer Support Specialist')">Apply Now</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== Apply Modal ========== -->
+    <div class="modal-overlay" id="applyModal">
+        <div class="apply-modal">
+            <button class="modal-close" onclick="closeApplyModal()"><i class="fa-solid fa-times"></i></button>
+            <h2>Apply for this Position</h2>
+            <p id="jobTitleDisplay">Senior Frontend Developer</p>
+
+            <form id="applyForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Portfolio / LinkedIn URL</label>
+                    <input type="url" placeholder="https://linkedin.com/in/johndoe">
+                </div>
+                <div class="form-group">
+                    <label>Upload CV (PDF)</label>
+                    <input type="file" accept=".pdf,.doc,.docx" style="padding: 10px;">
+                </div>
+                <button type="submit" class="btn-submit">Submit Application <i
+                        class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navOverlay.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+        }
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        }
+
+        // Apply Modal Logic
+        const applyModal = document.getElementById('applyModal');
+        const jobTitleDisplay = document.getElementById('jobTitleDisplay');
+        const applyForm = document.getElementById('applyForm');
+
+        function openApplyModal(jobTitle) {
+            jobTitleDisplay.textContent = "Applying for: " + jobTitle;
+            applyModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // منع التمرير
+        }
+
+        function closeApplyModal() {
+            applyModal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // إرجاع التمرير
+        }
+
+        // إغلاق المودال عند الضغط خارج المحتوى
+        applyModal.addEventListener('click', (e) => {
+            if (e.target === applyModal) {
+                closeApplyModal();
+            }
+        });
+
+        // عند إرسال النموذج
+        applyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Application submitted successfully! We will contact you soon.');
+            closeApplyModal();
+            applyForm.reset();
+        });
+    </script>
+</body>
+
+</html>

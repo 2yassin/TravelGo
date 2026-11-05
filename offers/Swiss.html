@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Swiss Alps Offer — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           1. CSS الأساسي (index.css)
+           ========================================== */
+        :root {
+            --primary: #F4794D;
+            --secondary: #FBA94C;
+            --bg-main: #0F0E17;
+            --bg-dark: #1A1626;
+            --bg-deep: #24203A;
+            --bg-card: #1E1B2E;
+            --bg-elevated: #2A2640;
+            --text-primary: #FFF7F0;
+            --text-secondary: #A7A9BE;
+            --text-muted: #6B6C7F;
+            --border: #2A2640;
+            --border-light: #3A3650;
+            --shadow-lg: rgba(244, 121, 77, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', 'Cairo', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h4,
+        h5,
+        h6 {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+        }
+
+        button {
+            font-family: 'Poppins', 'Cairo', sans-serif;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 14, 23, 0.6);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 14, 23, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            color: var(--primary);
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFFFFE;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            padding: 70px 0 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 320px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 22px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-list i {
+            color: var(--primary);
+            width: 18px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           2. CSS صفحة الطلب (Request Form)
+           ========================================== */
+        .request-hero {
+            padding: 130px 0 50px;
+            background: var(--bg-main);
+        }
+
+        .request-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        /* الصورة والعرض (يسار) */
+        .offer-showcase {
+            position: sticky;
+            top: 100px;
+        }
+
+        .offer-image-box {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            height: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .offer-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .offer-discount {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 0 8px 20px var(--shadow-lg);
+        }
+
+        .offer-details h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .offer-details p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .offer-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .offer-price-row .old {
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-size: 1.2rem;
+        }
+
+        .offer-price-row .new {
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1;
+        }
+
+        .offer-price-row .per {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .offer-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .offer-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .offer-features li i {
+            color: #34D399;
+            font-size: 14px;
+        }
+
+        /* نموذج الطلب (يمين) */
+        .request-form-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .request-form-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .request-form-box>p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.3s;
+            width: 100%;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border: none;
+            padding: 16px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px var(--shadow-lg);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--shadow-lg);
+        }
+
+        /* رسالة النجاح */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10B981, #34D399);
+            color: #FFF;
+            font-size: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .success-message h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid var(--border-light);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .request-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .offer-showcase {
+                position: static;
+            }
+
+            .offer-image-box {
+                height: 300px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .request-hero {
+                padding: 110px 0 40px;
+            }
+
+            .request-form-box {
+                padding: 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links,
+            .contact-list li {
+                justify-content: center;
+            }
+        }
+    </style>
+    <style>
+        /* ========== Back to Top ========== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F4794D, #FBA94C);
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(244, 121, 77, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99999;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(244, 121, 77, 0.6);
+        }
+
+        /* ========== WhatsApp ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+            z-index: 99999;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            animation: none;
+            background: #20BD5A;
+        }
+
+        @keyframes pulse-whatsapp {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* ========== Scroll Reveal ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .back-to-top {
+                width: 44px;
+                height: 44px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 14px;
+            }
+
+            .whatsapp-float {
+                width: 52px;
+                height: 52px;
+                font-size: 26px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
+
+
+        /* ==========================================
+   Search Modal
+   ========================================== */
+
+        /* Modal Base */
+        .search-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 80px 20px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .search-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Overlay */
+        .search-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Content */
+        .search-modal-content {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 700px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            transform: translateY(-30px) scale(0.96);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.4s ease;
+        }
+
+        .search-modal.active .search-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Close Button */
+        .search-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .search-close:hover {
+            background: var(--primary);
+            color: #FFF;
+            border-color: transparent;
+            transform: rotate(90deg);
+        }
+
+        /* Search Input */
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(244, 121, 77, 0.1);
+            background: var(--bg-card);
+        }
+
+        .search-input-wrapper>i {
+            color: var(--primary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .search-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            min-width: 0;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .search-input-wrapper kbd {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            flex-shrink: 0;
+        }
+
+        /* Search Sections */
+        .search-section {
+            margin-bottom: 24px;
+        }
+
+        .search-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .search-section-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 14px;
+        }
+
+        .search-section-title i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        /* Popular Tags */
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .search-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-tag:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(244, 121, 77, 0.3);
+        }
+
+        /* Recent Searches */
+        .search-recent {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 13.5px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-content: space-between;
+        }
+
+        .recent-item:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .recent-item>div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .recent-item i {
+            color: var(--primary);
+            font-size: 13px;
+        }
+
+        .recent-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .recent-remove:hover {
+            color: #E85A5A;
+        }
+
+        /* Quick Links */
+        .search-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-quick-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            transform: translateX(4px);
+        }
+
+        .quick-link-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(244, 121, 77, 0.12);
+            border: 1px solid rgba(244, 121, 77, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .quick-link-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: scale(1.05);
+        }
+
+        .search-quick-link>div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-quick-link strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 3px;
+        }
+
+        .search-quick-link span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .search-quick-link .arrow {
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        /* Body Lock */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-modal {
+                padding: 70px 15px 15px;
+            }
+
+            .search-modal-content {
+                padding: 22px 18px;
+                border-radius: 20px;
+                max-height: calc(100vh - 85px);
+            }
+
+            .search-close {
+                top: 14px;
+                right: 14px;
+                width: 34px;
+                height: 34px;
+            }
+
+            .search-input-wrapper {
+                padding: 13px 16px;
+                margin-bottom: 22px;
+            }
+
+            .search-input-wrapper input {
+                font-size: 14px;
+            }
+
+            .search-input-wrapper kbd {
+                display: none;
+            }
+
+            .search-section-title {
+                font-size: 11px;
+            }
+
+            .search-tag {
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/index.html" class="nav-link active">Home</a></li>
+                <li><a href="/Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="/Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="/Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="/Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="/About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="/Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="/Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ========== Request Body ========== -->
+    <section class="request-hero">
+        <div class="container">
+            <div class="request-layout">
+
+                <!-- Left: Offer Showcase -->
+                <div class="offer-showcase">
+                    <div class="offer-image-box">
+                        <img src="/img/Home/Destination/Swiss Alps/1.jpg" alt="Swiss Alps Offer">
+                        <span class="offer-discount">-30% OFF</span>
+                    </div>
+                    <div class="offer-details">
+                        <h2>Swiss Alps Adventure</h2>
+                        <p>6 nights · Half board · Mountain view. Discover the breathtaking beauty of the Swiss Alps
+                            with our exclusive adventure package.</p>
+                        <div class="offer-price-row">
+                            <span class="old">$2,200</span>
+                            <span class="new">$1,540</span>
+                            <span class="per">/ person</span>
+                        </div>
+                        <ul class="offer-features">
+                            <li><i class="fa-solid fa-check"></i> 4-Star Mountain Resort</li>
+                            <li><i class="fa-solid fa-check"></i> Half Board (Breakfast & Dinner)</li>
+                            <li><i class="fa-solid fa-check"></i> Scenic Train Pass Included</li>
+                            <li><i class="fa-solid fa-check"></i> Free Cancellation up to 48h</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Request Form -->
+                <div class="request-form-box">
+                    <div id="formContainer">
+                        <h3>Request This Offer</h3>
+                        <p>Fill out the form below and our travel experts will contact you within 24 hours to confirm
+                            your booking.</p>
+
+                        <form id="offerForm">
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-user"></i> Full Name</label>
+                                <input type="text" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-envelope"></i> Email Address</label>
+                                <input type="email" placeholder="john@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-phone"></i> Phone Number</label>
+                                <input type="tel" placeholder="+1 234 567 890" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-calendar"></i> Travel Date</label>
+                                    <input type="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-user-group"></i> Guests</label>
+                                    <select required>
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="1">1 Person</option>
+                                        <option value="2">2 People</option>
+                                        <option value="3">3 People</option>
+                                        <option value="4">4+ People</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-note-sticky"></i> Special Requests (Optional)</label>
+                                <textarea rows="3" placeholder="Any special requests?"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit">Send Request <i
+                                    class="fa-solid fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="successMessage">
+                        <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+                        <h3>Request Received!</h3>
+                        <p>Thank you for choosing TravelGo. Our team will contact you shortly to finalize your Swiss
+                            Alps trip.</p>
+                        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ========== Search Modal ========== -->
+
+    <!-- ========== Scripts ========== -->
+    <script>
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        navOverlay.addEventListener('click', () => { navMenu.classList.remove('active'); navOverlay.classList.remove('active'); const icon = menuToggle.querySelector('i'); icon.classList.add('fa-bars'); icon.classList.remove('fa-times'); });
+
+        // Form Submit
+        const offerForm = document.getElementById('offerForm');
+        const formContainer = document.getElementById('formContainer');
+        const successMessage = document.getElementById('successMessage');
+
+        offerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formContainer.style.display = 'none';
+            successMessage.classList.add('active');
+        });
+    </script>
+
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-overlay" id="searchOverlay"></div>
+        <div class="search-modal-content">
+            <button class="search-close" id="searchClose" aria-label="Close">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search destinations, packages, articles..." autofocus>
+                <kbd>ESC</kbd>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-fire"></i> Popular Searches
+                </h4>
+                <div class="search-tags">
+                    <button class="search-tag" data-search="Bali">Bali, Indonesia</button>
+                    <button class="search-tag" data-search="Paris">Paris, France</button>
+                    <button class="search-tag" data-search="Tokyo">Tokyo, Japan</button>
+                    <button class="search-tag" data-search="Maldives">Maldives</button>
+                    <button class="search-tag" data-search="Dubai">Dubai, UAE</button>
+                    <button class="search-tag" data-search="Santorini">Santorini, Greece</button>
+                </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="search-section" id="recentSection" style="display: none;">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Searches
+                </h4>
+                <div class="search-recent" id="recentList"></div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-bolt"></i> Quick Links
+                </h4>
+                <div class="search-quick-links">
+                    <a href="Destinations.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <strong>All Destinations</strong>
+                            <span>Browse 150+ places</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Packages.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <div>
+                            <strong>Packages</strong>
+                            <span>Economy, Standard, Luxury</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Blog.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <strong>Travel Blog</strong>
+                            <span>Guides & stories</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        /* ==========================================
+   Search Modal
+   ========================================== */
+        (function () {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchModal = document.getElementById('searchModal');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchClose = document.getElementById('searchClose');
+            const searchInput = document.getElementById('searchInput');
+            const searchTags = document.querySelectorAll('.search-tag');
+            const recentSection = document.getElementById('recentSection');
+            const recentList = document.getElementById('recentList');
+
+            // لو مش موجود في الصفحة (لأن زر البحث موجود)
+            if (!searchBtn || !searchModal) return;
+
+            // الملف: صفحة نبحث عنها
+            const SEARCH_DATA = {
+                'bali': 'Details.html',
+                'paris': 'Destinations.html',
+                'tokyo': 'Destinations.html',
+                'maldives': 'Destinations.html',
+                'dubai': 'Destinations.html',
+                'santorini': 'Destinations.html',
+                'packages': 'Packages.html',
+                'booking': 'Booking.html',
+                'blog': 'Blog.html',
+                'about': 'About.html',
+                'contact': 'Contact.html'
+            };
+
+            // ========== Open Modal ==========
+            function openModal() {
+                searchModal.classList.add('active');
+                document.body.classList.add('modal-open');
+                setTimeout(() => searchInput.focus(), 300);
+                loadRecent();
+            }
+
+            // ========== Close Modal ==========
+            function closeModal() {
+                searchModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                searchInput.value = '';
+            }
+
+            // ========== Save Search ==========
+            function saveSearch(query) {
+                if (!query || query.trim().length < 2) return;
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                recent = recent.filter(item => item.toLowerCase() !== query.toLowerCase());
+                recent.unshift(query);
+                recent = recent.slice(0, 5);
+                localStorage.setItem('travelgo_recent', JSON.stringify(recent));
+            }
+
+            // ========== Load Recent ==========
+            function loadRecent() {
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                if (recent.length === 0) {
+                    recentSection.style.display = 'none';
+                    return;
+                }
+                recentSection.style.display = 'block';
+                recentList.innerHTML = '';
+                recent.forEach((term, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'recent-item';
+                    item.innerHTML = `
+                <div>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>${term}</span>
+                </div>
+                <button class="recent-remove" data-index="${index}" aria-label="Remove">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            `;
+                    recentList.appendChild(item);
+
+                    // Click to search
+                    item.addEventListener('click', (e) => {
+                        if (e.target.closest('.recent-remove')) return;
+                        performSearch(term);
+                    });
+
+                    // Remove
+                    const removeBtn = item.querySelector('.recent-remove');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        let current = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                        current.splice(index, 1);
+                        localStorage.setItem('travelgo_recent', JSON.stringify(current));
+                        loadRecent();
+                    });
+                });
+            }
+
+            // ========== Perform Search ==========
+            function performSearch(query) {
+                if (!query || query.trim().length === 0) return;
+                saveSearch(query);
+                const lowerQuery = query.toLowerCase().trim();
+
+                // Find in SEARCH_DATA
+                for (const key in SEARCH_DATA) {
+                    if (lowerQuery.includes(key) || key.includes(lowerQuery)) {
+                        window.location.href = SEARCH_DATA[key];
+                        return;
+                    }
+                }
+
+                // Fallback: go to destinations
+                window.location.href = 'Destinations.html';
+            }
+
+            // ========== Event Listeners ==========
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+
+            searchClose.addEventListener('click', closeModal);
+            searchOverlay.addEventListener('click', closeModal);
+
+            // ESC to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Enter to search
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Popular Tags click
+            searchTags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const search = tag.dataset.search;
+                    searchInput.value = search;
+                    performSearch(search);
+                });
+            });
+
+            // Ctrl+K / Cmd+K to open
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openModal();
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

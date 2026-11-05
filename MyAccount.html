@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           1. CSS الأساسي للموقع (index.css)
+           ========================================== */
+        :root {
+            --primary: #F4794D;
+            --primary-hover: #E85A28;
+            --secondary: #FBA94C;
+            --bg-main: #0F0E17;
+            --bg-dark: #1A1626;
+            --bg-card: #1E1B2E;
+            --bg-elevated: #2A2640;
+            --text-primary: #FFF7F0;
+            --text-secondary: #A7A9BE;
+            --text-muted: #6B6C7F;
+            --border: #2A2640;
+            --border-light: #3A3650;
+            --shadow-lg: rgba(244, 121, 77, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+        }
+
+        button {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 14, 23, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFFFFE;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            padding: 70px 0 0;
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 320px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 22px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-list i {
+            color: var(--primary);
+            width: 18px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           2. CSS لوحة التحكم (Dashboard)
+           ========================================== */
+        .dashboard-section {
+            padding: 120px 0 50px;
+            background: var(--bg-main);
+            min-height: 100vh;
+        }
+
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* --- Sidebar --- */
+        .dash-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .user-profile-brief {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+        }
+
+        .user-profile-brief h3 {
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+
+        .user-profile-brief p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dash-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .dash-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .dash-nav-btn i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dash-nav-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .dash-nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            box-shadow: 0 4px 15px var(--shadow-lg);
+        }
+
+        /* --- المحتوى (Content) --- */
+        .dash-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .dash-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .dash-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .panel-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* 1. الملف الشخصي */
+        .profile-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-lg);
+        }
+
+        /* 2. حجوزاتي */
+        .booking-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 20px;
+            align-items: center;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .booking-item:hover {
+            border-color: var(--primary);
+        }
+
+        .booking-item img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .booking-info h4 {
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+
+        .booking-info p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 15px;
+        }
+
+        .booking-info p i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        .booking-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-confirmed {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+        }
+
+        .status-pending {
+            background: rgba(251, 169, 76, 0.15);
+            color: var(--secondary);
+        }
+
+        /* 3. المفضلة */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .wishlist-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wishlist-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .wishlist-body {
+            padding: 15px;
+        }
+
+        .wishlist-body h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .wishlist-body p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .wishlist-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 14, 23, 0.7);
+            border: none;
+            color: #FFF;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .wishlist-remove:hover {
+            background: #E85A5A;
+            color: #FFF;
+        }
+
+        /* 4. الإعدادات */
+        .settings-section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .settings-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .settings-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-sidebar {
+                position: static;
+            }
+
+            .dash-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .dash-nav-btn {
+                white-space: nowrap;
+                width: auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .profile-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .booking-item img {
+                height: 150px;
+            }
+
+            .booking-info p {
+                justify-content: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links,
+            .contact-list li {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ========== Dashboard Section ========== -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="dashboard-layout">
+
+                <!-- Sidebar -->
+                <aside class="dash-sidebar">
+                    <div class="user-profile-brief">
+                        <img src="img/Home/my img.png" alt="User"
+                            class="user-avatar">
+                        <h3>Sarah Johnson</h3>
+                        <p>sarah.j@example.com</p>
+                    </div>
+                    <nav class="dash-nav">
+                        <button class="dash-nav-btn active" data-target="profile"><i class="fa-regular fa-user"></i>
+                            Profile</button>
+                        <button class="dash-nav-btn" data-target="bookings"><i class="fa-solid fa-suitcase-rolling"></i>
+                            My Bookings</button>
+                        <button class="dash-nav-btn" data-target="wishlist"><i class="fa-regular fa-heart"></i>
+                            Wishlist</button>
+                        <button class="dash-nav-btn" data-target="settings"><i class="fa-solid fa-gear"></i>
+                            Settings</button>
+                        <button class="dash-nav-btn" style="color: #E85A5A; margin-top: 20px;"><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                    </nav>
+                </aside>
+
+                <!-- Content -->
+                <main class="dash-content">
+
+                    <!-- 1. الملف الشخصي -->
+                    <div class="dash-panel active" id="profile">
+                        <div class="panel-header">
+                            <h2>My Profile</h2>
+                            <p>Manage your personal information and contact details.</p>
+                        </div>
+                        <form>
+                            <div class="profile-form-grid">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" value="Yassin">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" value="Al_Bakkor">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" value=".....@gmail,com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" value="+306986987315">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>Date of Birth</label>
+                                    <input type="date" value="2006-05-15">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary"><i class="fa-solid fa-check"></i> Save
+                                Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- 2. حجوزاتي -->
+                    <div class="dash-panel" id="bookings">
+                        <div class="panel-header">
+                            <h2>My Bookings</h2>
+                            <p>View and manage your upcoming and past trips.</p>
+                        </div>
+
+                        <!-- حجز 1 -->
+                        <div class="booking-item">
+                            <img src="img/Home/packages/Economy.jpg"
+                                alt="Bali">
+                            <div class="booking-info">
+                                <h4>Bali, Indonesia</h4>
+                                <p><span><i class="fa-regular fa-calendar"></i> 10 Nov - 17 Nov 2026</span> <span><i
+                                            class="fa-solid fa-hashtag"></i> TG-89412</span></p>
+                            </div>
+                            <span class="booking-status status-confirmed">Confirmed</span>
+                        </div>
+
+                        <!-- حجز 2 -->
+                        <div class="booking-item">
+                            <img src="img\Home\blog\Santorini Guide.jpg"
+                                alt="Santorini">
+                            <div class="booking-info">
+                                <h4>Santorini, Greece</h4>
+                                <p><span><i class="fa-regular fa-calendar"></i> 05 Jun - 10 Jun 2026</span> <span><i
+                                            class="fa-solid fa-hashtag"></i> TG-77621</span></p>
+                            </div>
+                            <span class="booking-status status-pending">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. المفضلة -->
+                    <div class="dash-panel" id="wishlist">
+                        <div class="panel-header">
+                            <h2>My Wishlist</h2>
+                            <p>Destinations you've saved for later.</p>
+                        </div>
+                        <div class="wishlist-grid">
+                            <div class="wishlist-card">
+                                <button class="wishlist-remove"><i class="fa-solid fa-xmark"></i></button>
+                                <img src="img/Home/account/NYC.jpg"
+                                    alt="NYC">
+                                <div class="wishlist-body">
+                                    <h4>New York, USA</h4>
+                                    <p>From $1,199</p>
+                                </div>
+                            </div>
+                            <div class="wishlist-card">
+                                <button class="wishlist-remove"><i class="fa-solid fa-xmark"></i></button>
+                                <img src="img/Home/account/Paris.jpg"
+                                    alt="Paris">
+                                <div class="wishlist-body">
+                                    <h4>Paris, France</h4>
+                                    <p>From $899</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. الإعدادات -->
+                    <div class="dash-panel" id="settings">
+                        <div class="panel-header">
+                            <h2>Account Settings</h2>
+                            <p>Manage your password and notification preferences.</p>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Change Password</h3>
+                            <form>
+                                <div class="profile-form-grid">
+                                    <div class="form-group full-width">
+                                        <label>Current Password</label>
+                                        <input type="password" placeholder="••••••••">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>New Password</label>
+                                        <input type="password" placeholder="••••••••">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm New Password</label>
+                                        <input type="password" placeholder="••••••••">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary" style="margin-top: 10px;">Update
+                                    Password</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Notifications</h3>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notif1" checked>
+                                <label for="notif1">Email me about special offers and promotions</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notif2" checked>
+                                <label for="notif2">Send me booking updates and reminders</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notif3">
+                                <label for="notif3">Subscribe to the TravelGo newsletter</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        /* ==========================================
+   1. إعدادات عامة (Mobile Menu)
+   ========================================== */
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navOverlay.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+        }
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        }
+
+        /* ==========================================
+           2. التنقل بين أقسام لوحة التحكم (Dashboard Tabs)
+           ========================================== */
+        const dashBtns = document.querySelectorAll('.dash-nav-btn[data-target]');
+        const dashPanels = document.querySelectorAll('.dash-panel');
+
+        dashBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // إزالة كلاس active من كل الأزرار
+                dashBtns.forEach(b => b.classList.remove('active'));
+                // إضافة الكلاس للزر اللي تم ضغطه
+                btn.classList.add('active');
+
+                // إخفاء كل الأقسام
+                dashPanels.forEach(p => p.classList.remove('active'));
+
+                // إظهار القسم المطلوب
+                const targetId = btn.dataset.target;
+                const targetPanel = document.getElementById(targetId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+
+        /* ==========================================
+           3. إزالة عناصر من المفضلة (Wishlist)
+           ========================================== */
+        const wishlistRemoveBtns = document.querySelectorAll('.wishlist-remove');
+
+        wishlistRemoveBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = btn.closest('.wishlist-card');
+
+                // تأثير اختفاء ناعم
+                card.style.transform = 'scale(0.8)';
+                card.style.opacity = '0';
+
+                setTimeout(() => {
+                    card.remove();
+
+                    // إذا صارت المفضلة فاضية، نطلع رسالة
+                    const wishlistGrid = document.querySelector('.wishlist-grid');
+                    if (wishlistGrid && wishlistGrid.children.length === 0) {
+                        wishlistGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fa-regular fa-heart" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <p>Your wishlist is empty. Start exploring destinations!</p>
+                    </div>
+                `;
+                    }
+                }, 300);
+            });
+        });
+
+        /* ==========================================
+           4. حفظ بيانات الملف الشخصي
+           ========================================== */
+        const profileForm = document.querySelector('#profile form');
+
+        if (profileForm) {
+            profileForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // منع إعادة تحميل الصفحة
+
+                const submitBtn = profileForm.querySelector('.btn-primary');
+                const originalText = submitBtn.innerHTML;
+
+                // تغيير شكل الزر (تحميل)
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                submitBtn.disabled = true;
+
+                // محاكاة الإرسال للسيرفر
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Saved Successfully!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #10B981, #34D399)'; // لون أخضر
+
+                    // إرجاع الزر لشكله الأصلي بعد ثانيتين
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                    }, 2000);
+                }, 1500);
+            });
+        }
+
+        /* ==========================================
+           5. تغيير كلمة المرور والإعدادات
+           ========================================== */
+        const settingsForms = document.querySelectorAll('#settings form');
+
+        settingsForms.forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const submitBtn = form.querySelector('.btn-primary');
+                const originalText = submitBtn.innerHTML;
+
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating...';
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Updated!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #10B981, #34D399)';
+
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                        form.reset(); // تفريغ الحقول
+                    }, 2000);
+                }, 1500);
+            });
+        });
+
+        /* ==========================================
+           6. تفعيل خيارات الإشعارات (Checkboxes)
+           ========================================== */
+        const notifCheckboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+
+        notifCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // حفظ الحالة في الـ LocalStorage
+                const notifId = checkbox.id;
+                localStorage.setItem(notifId, checkbox.checked);
+
+                // ممكن نطلع رسالة صغيرة
+                console.log(`Notification ${notifId}: ${checkbox.checked ? 'Enabled' : 'Disabled'}`);
+            });
+
+            // استرجاع الحالة المحفوظة مسبقاً
+            const savedState = localStorage.getItem(checkbox.id);
+            if (savedState !== null) {
+                checkbox.checked = savedState === 'true';
+            }
+        });
+
+        /* ==========================================
+           7. تسجيل الخروج (Logout)
+           ========================================== */
+        const logoutBtn = document.querySelector('.dash-nav-btn[style*="color: #E85A5A"]');
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // تأكيد قبل تسجيل الخروج
+                if (confirm("Are you sure you want to log out?")) {
+                    // مسح بيانات الجلسة (لو موجودة)
+                    sessionStorage.clear();
+
+                    // التوجه لصفحة تسجيل الدخول
+                    window.location.href = 'Auth.html';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ملفات التصميم -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/booking.css">
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F4794D, #FBA94C);
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(244, 121, 77, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99999;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(244, 121, 77, 0.6);
+        }
+
+        /* ========== WhatsApp ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+            z-index: 99999;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            animation: none;
+            background: #20BD5A;
+        }
+
+        @keyframes pulse-whatsapp {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* ========== Scroll Reveal ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .back-to-top {
+                width: 44px;
+                height: 44px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 14px;
+            }
+
+            .whatsapp-float {
+                width: 52px;
+                height: 52px;
+                font-size: 26px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
+
+        /* ==========================================
+   Search Modal
+   ========================================== */
+
+        /* Modal Base */
+        .search-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 80px 20px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .search-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Overlay */
+        .search-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Content */
+        .search-modal-content {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 700px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            transform: translateY(-30px) scale(0.96);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.4s ease;
+        }
+
+        .search-modal.active .search-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Close Button */
+        .search-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .search-close:hover {
+            background: var(--primary);
+            color: #FFF;
+            border-color: transparent;
+            transform: rotate(90deg);
+        }
+
+        /* Search Input */
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(244, 121, 77, 0.1);
+            background: var(--bg-card);
+        }
+
+        .search-input-wrapper>i {
+            color: var(--primary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .search-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            min-width: 0;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .search-input-wrapper kbd {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            flex-shrink: 0;
+        }
+
+        /* Search Sections */
+        .search-section {
+            margin-bottom: 24px;
+        }
+
+        .search-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .search-section-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 14px;
+        }
+
+        .search-section-title i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        /* Popular Tags */
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .search-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-tag:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(244, 121, 77, 0.3);
+        }
+
+        /* Recent Searches */
+        .search-recent {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 13.5px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-content: space-between;
+        }
+
+        .recent-item:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .recent-item>div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .recent-item i {
+            color: var(--primary);
+            font-size: 13px;
+        }
+
+        .recent-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .recent-remove:hover {
+            color: #E85A5A;
+        }
+
+        /* Quick Links */
+        .search-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-quick-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            transform: translateX(4px);
+        }
+
+        .quick-link-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(244, 121, 77, 0.12);
+            border: 1px solid rgba(244, 121, 77, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .quick-link-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: scale(1.05);
+        }
+
+        .search-quick-link>div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-quick-link strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 3px;
+        }
+
+        .search-quick-link span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .search-quick-link .arrow {
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        /* Body Lock */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-modal {
+                padding: 70px 15px 15px;
+            }
+
+            .search-modal-content {
+                padding: 22px 18px;
+                border-radius: 20px;
+                max-height: calc(100vh - 85px);
+            }
+
+            .search-close {
+                top: 14px;
+                right: 14px;
+                width: 34px;
+                height: 34px;
+            }
+
+            .search-input-wrapper {
+                padding: 13px 16px;
+                margin-bottom: 22px;
+            }
+
+            .search-input-wrapper input {
+                font-size: 14px;
+            }
+
+            .search-input-wrapper kbd {
+                display: none;
+            }
+
+            .search-section-title {
+                font-size: 11px;
+            }
+
+            .search-tag {
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ========== Page Hero ========== -->
+    <section class="page-hero booking-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>Booking</span>
+                </nav>
+
+                <h1>Complete Your Booking</h1>
+                <p>Just a few steps and your dream trip will be ready</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Progress Steps ========== -->
+    <section class="booking-progress-section">
+        <div class="container">
+            <div class="progress-steps" id="progressSteps">
+                <div class="step active" data-step="1">
+                    <div class="step-circle">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="step-check"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="step-info">
+                        <span class="step-num">Step 1</span>
+                        <strong>Destination</strong>
+                    </div>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" data-step="2">
+                    <div class="step-circle">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="step-check"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="step-info">
+                        <span class="step-num">Step 2</span>
+                        <strong>Personal Info</strong>
+                    </div>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" data-step="3">
+                    <div class="step-circle">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span class="step-check"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="step-info">
+                        <span class="step-num">Step 3</span>
+                        <strong>Payment</strong>
+                    </div>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" data-step="4">
+                    <div class="step-circle">
+                        <i class="fa-solid fa-check-double"></i>
+                        <span class="step-check"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="step-info">
+                        <span class="step-num">Step 4</span>
+                        <strong>Confirmation</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Booking Body ========== -->
+    <section class="booking-body">
+        <div class="container">
+            <div class="booking-layout">
+
+                <!-- ========== Main (Steps Content) ========== -->
+                <div class="booking-main">
+
+                    <!-- ========== STEP 1: Destination ========== -->
+                    <div class="booking-step active" data-step="1">
+                        <div class="step-content">
+                            <h2 class="step-title">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Choose Your Destination
+                            </h2>
+                            <p class="step-subtitle">Select where you want to go and your travel dates</p>
+
+                            <!-- Selected Destination Preview -->
+                            <div class="selected-destination">
+                                <div class="selected-image">
+                                    <img src="img/Home/packages/Economy.jpg"
+                                        alt="Bali">
+                                </div>
+                                <div class="selected-info">
+                                    <span class="selected-tag">Selected Destination</span>
+                                    <h3>Bali, Indonesia</h3>
+                                    <p>Tropical Paradise Escape · 7 Days / 6 Nights</p>
+                                    <button class="change-dest">
+                                        <i class="fa-solid fa-pen"></i> Change
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Dates -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Travel Dates</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-calendar"></i> Check-in Date</label>
+                                        <input type="date" value="2026-11-01" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-calendar-check"></i> Check-out Date</label>
+                                        <input type="date" value="2026-11-08" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Travelers -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Travelers</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-user"></i> Adults</label>
+                                        <div class="counter">
+                                            <button type="button" class="counter-btn" data-action="minus"
+                                                data-target="adults">
+                                                <i class="fa-solid fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="adults" value="2" min="1" max="20" readonly>
+                                            <button type="button" class="counter-btn" data-action="plus"
+                                                data-target="adults">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-child"></i> Children</label>
+                                        <div class="counter">
+                                            <button type="button" class="counter-btn" data-action="minus"
+                                                data-target="children">
+                                                <i class="fa-solid fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="children" value="0" min="0" max="10" readonly>
+                                            <button type="button" class="counter-btn" data-action="plus"
+                                                data-target="children">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Package Type -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Package Type</h3>
+                                <div class="package-select">
+                                    <label class="package-option">
+                                        <input type="radio" name="package" value="economy">
+                                        <span class="package-card-select">
+                                            <span class="pkg-radio"></span>
+                                            <span class="pkg-content">
+                                                <strong>Economy</strong>
+                                                <span>5 Days · 3-star hotel</span>
+                                            </span>
+                                            <span class="pkg-price">$699</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="package-option">
+                                        <input type="radio" name="package" value="standard" checked>
+                                        <span class="package-card-select">
+                                            <span class="pkg-radio"></span>
+                                            <span class="pkg-content">
+                                                <strong>Standard <span class="popular-mini">Popular</span></strong>
+                                                <span>7 Days · 4-star hotel</span>
+                                            </span>
+                                            <span class="pkg-price">$1,299</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="package-option">
+                                        <input type="radio" name="package" value="luxury">
+                                        <span class="package-card-select">
+                                            <span class="pkg-radio"></span>
+                                            <span class="pkg-content">
+                                                <strong>Luxury</strong>
+                                                <span>10 Days · 5-star villa</span>
+                                            </span>
+                                            <span class="pkg-price">$3,499</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Navigation -->
+                            <div class="step-nav">
+                                <button class="btn-step btn-next" data-next="2">
+                                    Continue to Personal Info <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========== STEP 2: Personal Info ========== -->
+                    <div class="booking-step" data-step="2">
+                        <div class="step-content">
+                            <h2 class="step-title">
+                                <i class="fa-solid fa-user"></i>
+                                Personal Information
+                            </h2>
+                            <p class="step-subtitle">Tell us about the main traveler</p>
+
+                            <div class="form-section">
+                                <h3 class="form-section-title">Contact Details</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-user"></i> First Name</label>
+                                        <input type="text" placeholder="John" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-user"></i> Last Name</label>
+                                        <input type="text" placeholder="Doe" required>
+                                    </div>
+                                </div>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-envelope"></i> Email Address</label>
+                                        <input type="email" placeholder="john@example.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-phone"></i> Phone Number</label>
+                                        <input type="tel" placeholder="+1 234 567 890" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3 class="form-section-title">Additional Details</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-globe"></i> Country</label>
+                                        <select required>
+                                            <option value="">Select country</option>
+                                            <option>United States</option>
+                                            <option>United Kingdom</option>
+                                            <option>UAE</option>
+                                            <option>Saudi Arabia</option>
+                                            <option>Syria</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-calendar"></i> Date of Birth</label>
+                                        <input type="date" required>
+                                    </div>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label><i class="fa-solid fa-note-sticky"></i> Special Requests (optional)</label>
+                                    <textarea placeholder="Any special requests? Dietary needs, room preferences, etc."
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3 class="form-section-title">Emergency Contact</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-user"></i> Contact Name</label>
+                                        <input type="text" placeholder="Jane Doe">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-phone"></i> Contact Phone</label>
+                                        <input type="tel" placeholder="+1 234 567 890">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked>
+                                <span class="checkbox-custom"></span>
+                                <span>Save my information for future bookings</span>
+                            </label>
+
+                            <div class="step-nav">
+                                <button class="btn-step btn-back" data-back="1">
+                                    <i class="fa-solid fa-arrow-left"></i> Back
+                                </button>
+                                <button class="btn-step btn-next" data-next="3">
+                                    Continue to Payment <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========== STEP 3: Payment ========== -->
+                    <div class="booking-step" data-step="3">
+                        <div class="step-content">
+                            <h2 class="step-title">
+                                <i class="fa-solid fa-credit-card"></i>
+                                Payment Details
+                            </h2>
+                            <p class="step-subtitle">Choose your preferred payment method</p>
+
+                            <!-- Payment Methods -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Payment Method</h3>
+                                <div class="payment-methods-select">
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment" value="card" checked>
+                                        <span class="payment-card-select">
+                                            <i class="fa-brands fa-cc-visa"></i>
+                                            <span>Credit / Debit Card</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment" value="paypal">
+                                        <span class="payment-card-select">
+                                            <i class="fa-brands fa-cc-paypal"></i>
+                                            <span>PayPal</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment" value="applepay">
+                                        <span class="payment-card-select">
+                                            <i class="fa-brands fa-cc-apple-pay"></i>
+                                            <span>Apple Pay</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Card Details -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Card Information</h3>
+                                <div class="form-group full-width">
+                                    <label><i class="fa-solid fa-credit-card"></i> Card Number</label>
+                                    <div class="card-input-wrap">
+                                        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                                        <i class="fa-brands fa-cc-visa card-brand"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label><i class="fa-solid fa-user"></i> Cardholder Name</label>
+                                    <input type="text" placeholder="JOHN DOE">
+                                </div>
+                                <div class="form-grid-3">
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-calendar"></i> Expiry Month</label>
+                                        <select>
+                                            <option>01</option>
+                                            <option>02</option>
+                                            <option>03</option>
+                                            <option>04</option>
+                                            <option>05</option>
+                                            <option>06</option>
+                                            <option>07</option>
+                                            <option>08</option>
+                                            <option>09</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-calendar"></i> Expiry Year</label>
+                                        <select>
+                                            <option>2026</option>
+                                            <option>2027</option>
+                                            <option>2028</option>
+                                            <option>2029</option>
+                                            <option>2030</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa-solid fa-lock"></i> CVV</label>
+                                        <input type="text" placeholder="123" maxlength="4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Billing Address -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Billing Address</h3>
+                                <div class="form-group full-width">
+                                    <label><i class="fa-solid fa-location-dot"></i> Street Address</label>
+                                    <input type="text" placeholder="123 Main Street">
+                                </div>
+                                <div class="form-grid-3">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input type="text" placeholder="New York">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        <input type="text" placeholder="NY">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>ZIP Code</label>
+                                        <input type="text" placeholder="10001">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked required>
+                                <span class="checkbox-custom"></span>
+                                <span>I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy
+                                        Policy</a></span>
+                            </label>
+
+                            <div class="step-nav">
+                                <button class="btn-step btn-back" data-back="2">
+                                    <i class="fa-solid fa-arrow-left"></i> Back
+                                </button>
+                                <button class="btn-step btn-next btn-pay" data-next="4">
+                                    <i class="fa-solid fa-lock"></i> Pay $2,628
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========== STEP 4: Confirmation ========== -->
+                    <div class="booking-step" data-step="4">
+                        <div class="step-content confirmation-content">
+                            <div class="success-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+
+                            <h2 class="success-title">Booking Confirmed!</h2>
+                            <p class="success-subtitle">
+                                Thank you for choosing TravelGo. Your trip to <strong>Bali, Indonesia</strong> is now
+                                confirmed.
+                            </p>
+
+                            <!-- Booking Details Card -->
+                            <div class="confirmation-card">
+                                <div class="confirmation-header">
+                                    <div>
+                                        <span class="conf-label">Booking Reference</span>
+                                        <h3 class="conf-ref">#TG-2026-89412</h3>
+                                    </div>
+                                    <span class="conf-badge">
+                                        <i class="fa-solid fa-circle-check"></i> Confirmed
+                                    </span>
+                                </div>
+
+                                <div class="confirmation-grid">
+                                    <div class="conf-item">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <div>
+                                            <span>Destination</span>
+                                            <strong>Bali, Indonesia</strong>
+                                        </div>
+                                    </div>
+                                    <div class="conf-item">
+                                        <i class="fa-solid fa-calendar"></i>
+                                        <div>
+                                            <span>Check-in</span>
+                                            <strong>Nov 1, 2026</strong>
+                                        </div>
+                                    </div>
+                                    <div class="conf-item">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                        <div>
+                                            <span>Check-out</span>
+                                            <strong>Nov 8, 2026</strong>
+                                        </div>
+                                    </div>
+                                    <div class="conf-item">
+                                        <i class="fa-solid fa-user-group"></i>
+                                        <div>
+                                            <span>Travelers</span>
+                                            <strong>2 Adults</strong>
+                                        </div>
+                                    </div>
+                                    <div class="conf-item">
+                                        <i class="fa-solid fa-box"></i>
+                                        <div>
+                                            <span>Package</span>
+                                            <strong>Standard</strong>
+                                        </div>
+                                    </div>
+                                    <div class="conf-item">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        <div>
+                                            <span>Total Paid</span>
+                                            <strong class="conf-price">$2,628</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="confirmation-note">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    A confirmation email has been sent to <strong>john@example.com</strong>
+                                </p>
+                            </div>
+
+                            <!-- What's Next -->
+                            <div class="whats-next">
+                                <h3>What Happens Next?</h3>
+                                <div class="next-steps">
+                                    <div class="next-step">
+                                        <div class="next-num">1</div>
+                                        <div>
+                                            <strong>Email Confirmation</strong>
+                                            <p>You'll receive a detailed itinerary within 24 hours</p>
+                                        </div>
+                                    </div>
+                                    <div class="next-step">
+                                        <div class="next-num">2</div>
+                                        <div>
+                                            <strong>Prepare Documents</strong>
+                                            <p>Ensure your passport is valid for at least 6 months</p>
+                                        </div>
+                                    </div>
+                                    <div class="next-step">
+                                        <div class="next-num">3</div>
+                                        <div>
+                                            <strong>Download Our App</strong>
+                                            <p>Access your booking, itinerary & support anytime</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="confirmation-actions">
+                                <button class="btn-action primary">
+                                    <i class="fa-solid fa-download"></i> Download Invoice
+                                </button>
+                                <button class="btn-action">
+                                    <i class="fa-solid fa-calendar-plus"></i> Add to Calendar
+                                </button>
+                                <button class="btn-action">
+                                    <i class="fa-solid fa-share-nodes"></i> Share
+                                </button>
+                            </div>
+
+                            <div class="back-home">
+                                <a href="index.html">
+                                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ========== Summary Sidebar ========== -->
+                <aside class="booking-summary">
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <h3><i class="fa-solid fa-receipt"></i> Booking Summary</h3>
+                        </div>
+
+                        <!-- Destination Preview -->
+                        <div class="summary-destination">
+                            <img src="img/Home/packages/Economy.jpg"
+                                alt="Bali">
+                            <div>
+                                <span class="summary-tag">Bali, Indonesia</span>
+                                <h4>Tropical Paradise Escape</h4>
+                                <div class="summary-rating">
+                                    <i class="fa-solid fa-star"></i> 4.8 · (980)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="summary-details">
+                            <div class="summary-row">
+                                <span><i class="fa-solid fa-calendar"></i> Check-in</span>
+                                <strong>Nov 1, 2026</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span><i class="fa-solid fa-calendar-check"></i> Check-out</span>
+                                <strong>Nov 8, 2026</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span><i class="fa-solid fa-user-group"></i> Travelers</span>
+                                <strong>2 Adults, 0 Children</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span><i class="fa-solid fa-box"></i> Package</span>
+                                <strong class="summary-package">Standard</strong>
+                            </div>
+                        </div>
+
+                        <!-- Price Breakdown -->
+                        <div class="summary-prices">
+                            <div class="price-row">
+                                <span>Standard Package × 2</span>
+                                <span>$2,598</span>
+                            </div>
+                            <div class="price-row">
+                                <span>Taxes & fees</span>
+                                <span>$180</span>
+                            </div>
+                            <div class="price-row discount">
+                                <span><i class="fa-solid fa-tag"></i> Early bird discount</span>
+                                <span>– $150</span>
+                            </div>
+                        </div>
+
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span class="total-price">$2,628</span>
+                        </div>
+
+                        <!-- Trust Badges -->
+                        <div class="trust-badges">
+                            <div class="trust-item">
+                                <i class="fa-solid fa-shield-halved"></i>
+                                <span>Secure Payment</span>
+                            </div>
+                            <div class="trust-item">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>Free Cancellation</span>
+                            </div>
+                            <div class="trust-item">
+                                <i class="fa-solid fa-headset"></i>
+                                <span>24/7 Support</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Help Box -->
+                    <div class="help-box">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <h4>Need Help?</h4>
+                        <p>Our team is available 24/7 to assist you</p>
+                        <a href="#" class="help-link">
+                            <i class="fa-solid fa-phone"></i> +1 234 567 890
+                        </a>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== Back to Top ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- ========== WhatsApp Float ========== -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <!-- ========== Search Modal ========== -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-overlay" id="searchOverlay"></div>
+        <div class="search-modal-content">
+            <button class="search-close" id="searchClose" aria-label="Close">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search destinations, packages, articles..." autofocus>
+                <kbd>ESC</kbd>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-fire"></i> Popular Searches
+                </h4>
+                <div class="search-tags">
+                    <button class="search-tag" data-search="Bali">Bali, Indonesia</button>
+                    <button class="search-tag" data-search="Paris">Paris, France</button>
+                    <button class="search-tag" data-search="Tokyo">Tokyo, Japan</button>
+                    <button class="search-tag" data-search="Maldives">Maldives</button>
+                    <button class="search-tag" data-search="Dubai">Dubai, UAE</button>
+                    <button class="search-tag" data-search="Santorini">Santorini, Greece</button>
+                </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="search-section" id="recentSection" style="display: none;">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Searches
+                </h4>
+                <div class="search-recent" id="recentList"></div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-bolt"></i> Quick Links
+                </h4>
+                <div class="search-quick-links">
+                    <a href="Destinations.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <strong>All Destinations</strong>
+                            <span>Browse 150+ places</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Packages.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <div>
+                            <strong>Packages</strong>
+                            <span>Economy, Standard, Luxury</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Blog.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <strong>Travel Blog</strong>
+                            <span>Guides & stories</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ========== Scripts ========== -->
+    <script>
+        /* ==========================================
+           1. Mobile Menu
+           ========================================== */
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
+
+        /* ==========================================
+           2. Navbar Scroll
+           ========================================== */
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        /* ==========================================
+           3. Steps Navigation
+           ========================================== */
+        const steps = document.querySelectorAll('.step');
+        const stepContents = document.querySelectorAll('.booking-step');
+        const progressSection = document.querySelector('.booking-progress-section');
+
+        function goToStep(stepNum) {
+            steps.forEach(step => {
+                const stepNumEl = parseInt(step.dataset.step);
+                step.classList.remove('active', 'completed');
+                if (stepNumEl < stepNum) {
+                    step.classList.add('completed');
+                } else if (stepNumEl === stepNum) {
+                    step.classList.add('active');
+                }
+            });
+
+            stepContents.forEach(content => {
+                content.classList.remove('active');
+                if (parseInt(content.dataset.step) === stepNum) {
+                    content.classList.add('active');
+                }
+            });
+
+            window.scrollTo({
+                top: progressSection.offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+
+        document.querySelectorAll('.btn-next').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const next = parseInt(btn.dataset.next);
+                goToStep(next);
+            });
+        });
+
+        document.querySelectorAll('.btn-back').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const back = parseInt(btn.dataset.back);
+                goToStep(back);
+            });
+        });
+
+        /* ==========================================
+           4. Counters
+           ========================================== */
+        document.querySelectorAll('.counter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = document.getElementById(btn.dataset.target);
+                const action = btn.dataset.action;
+                let value = parseInt(target.value);
+                const min = parseInt(target.min);
+                const max = parseInt(target.max);
+
+                if (action === 'plus' && value < max) value++;
+                else if (action === 'minus' && value > min) value--;
+
+                target.value = value;
+                updateSummary();
+            });
+        });
+
+        /* ==========================================
+           5. Package Selection
+           ========================================== */
+        document.querySelectorAll('input[name="package"]').forEach(radio => {
+            radio.addEventListener('change', updateSummary);
+        });
+
+        /* ==========================================
+           6. Update Summary
+           ========================================== */
+        function updateSummary() {
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            const pkg = document.querySelector('input[name="package"]:checked').value;
+
+            const travelersEl = document.querySelector('.summary-row:nth-child(3) strong');
+            if (travelersEl) {
+                travelersEl.textContent = `${adults} Adults, ${children} Children`;
+            }
+
+            const pkgMap = { economy: 'Economy', standard: 'Standard', luxury: 'Luxury' };
+            const pkgPriceMap = { economy: 699, standard: 1299, luxury: 3499 };
+
+            const pkgEl = document.querySelector('.summary-package');
+            if (pkgEl) pkgEl.textContent = pkgMap[pkg];
+
+            const totalTravelers = parseInt(adults) + parseInt(children);
+            const basePrice = pkgPriceMap[pkg] * totalTravelers;
+
+            const priceRows = document.querySelectorAll('.summary-prices .price-row');
+            if (priceRows[0]) {
+                priceRows[0].querySelector('span:first-child').textContent = `${pkgMap[pkg]} Package × ${totalTravelers}`;
+                priceRows[0].querySelector('span:last-child').textContent = `$${basePrice.toLocaleString()}`;
+            }
+
+            const taxes = 180;
+            const discount = 150;
+            const total = basePrice + taxes - discount;
+
+            const totalEl = document.querySelector('.total-price');
+            if (totalEl) totalEl.textContent = `$${total.toLocaleString()}`;
+
+            const payBtn = document.querySelector('.btn-pay');
+            if (payBtn) {
+                payBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Pay $${total.toLocaleString()}`;
+            }
+
+            if (priceRows[1]) priceRows[1].querySelector('span:last-child').textContent = `$${taxes}`;
+            if (priceRows[2]) priceRows[2].querySelector('span:last-child').textContent = `– $${discount}`;
+        }
+
+        /* ==========================================
+           7. Card Number Formatting
+           ========================================== */
+        const cardNumberInput = document.querySelector('input[placeholder="1234 5678 9012 3456"]');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\s/g, '');
+                let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+                e.target.value = formatted.substring(0, 19);
+            });
+        }
+
+        /* ==========================================
+           8. CVV Only Numbers
+           ========================================== */
+        const cvvInput = document.querySelector('input[placeholder="123"]');
+        if (cvvInput) {
+            cvvInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '');
+            });
+        }
+
+        /* ==========================================
+           9. Initial Summary
+           ========================================== */
+        updateSummary();
+
+        /* ==========================================
+           10. Back to Top
+           ========================================== */
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        /* ==========================================
+           11. Scroll Reveal
+           ========================================== */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -60px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+    <script>
+        /* ==========================================
+   Search Modal
+   ========================================== */
+        (function () {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchModal = document.getElementById('searchModal');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchClose = document.getElementById('searchClose');
+            const searchInput = document.getElementById('searchInput');
+            const searchTags = document.querySelectorAll('.search-tag');
+            const recentSection = document.getElementById('recentSection');
+            const recentList = document.getElementById('recentList');
+
+            // لو مش موجود في الصفحة (لأن زر البحث موجود)
+            if (!searchBtn || !searchModal) return;
+
+            // الملف: صفحة نبحث عنها
+            const SEARCH_DATA = {
+                'bali': 'Details.html',
+                'paris': 'Destinations.html',
+                'tokyo': 'Destinations.html',
+                'maldives': 'Destinations.html',
+                'dubai': 'Destinations.html',
+                'santorini': 'Destinations.html',
+                'packages': 'Packages.html',
+                'booking': 'Booking.html',
+                'blog': 'Blog.html',
+                'about': 'About.html',
+                'contact': 'Contact.html'
+            };
+
+            // ========== Open Modal ==========
+            function openModal() {
+                searchModal.classList.add('active');
+                document.body.classList.add('modal-open');
+                setTimeout(() => searchInput.focus(), 300);
+                loadRecent();
+            }
+
+            // ========== Close Modal ==========
+            function closeModal() {
+                searchModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                searchInput.value = '';
+            }
+
+            // ========== Save Search ==========
+            function saveSearch(query) {
+                if (!query || query.trim().length < 2) return;
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                recent = recent.filter(item => item.toLowerCase() !== query.toLowerCase());
+                recent.unshift(query);
+                recent = recent.slice(0, 5);
+                localStorage.setItem('travelgo_recent', JSON.stringify(recent));
+            }
+
+            // ========== Load Recent ==========
+            function loadRecent() {
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                if (recent.length === 0) {
+                    recentSection.style.display = 'none';
+                    return;
+                }
+                recentSection.style.display = 'block';
+                recentList.innerHTML = '';
+                recent.forEach((term, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'recent-item';
+                    item.innerHTML = `
+                <div>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>${term}</span>
+                </div>
+                <button class="recent-remove" data-index="${index}" aria-label="Remove">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            `;
+                    recentList.appendChild(item);
+
+                    // Click to search
+                    item.addEventListener('click', (e) => {
+                        if (e.target.closest('.recent-remove')) return;
+                        performSearch(term);
+                    });
+
+                    // Remove
+                    const removeBtn = item.querySelector('.recent-remove');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        let current = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                        current.splice(index, 1);
+                        localStorage.setItem('travelgo_recent', JSON.stringify(current));
+                        loadRecent();
+                    });
+                });
+            }
+
+            // ========== Perform Search ==========
+            function performSearch(query) {
+                if (!query || query.trim().length === 0) return;
+                saveSearch(query);
+                const lowerQuery = query.toLowerCase().trim();
+
+                // Find in SEARCH_DATA
+                for (const key in SEARCH_DATA) {
+                    if (lowerQuery.includes(key) || key.includes(lowerQuery)) {
+                        window.location.href = SEARCH_DATA[key];
+                        return;
+                    }
+                }
+
+                // Fallback: go to destinations
+                window.location.href = 'Destinations.html';
+            }
+
+            // ========== Event Listeners ==========
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+
+            searchClose.addEventListener('click', closeModal);
+            searchOverlay.addEventListener('click', closeModal);
+
+            // ESC to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Enter to search
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Popular Tags click
+            searchTags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const search = tag.dataset.search;
+                    searchInput.value = search;
+                    performSearch(search);
+                });
+            });
+
+            // Ctrl+K / Cmd+K to open
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openModal();
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

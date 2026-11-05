@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           1. CSS الأساسي للموقع (index.css)
+           ========================================== */
+        :root {
+            --primary: #F4794D;
+            --primary-hover: #E85A28;
+            --secondary: #FBA94C;
+            --bg-main: #0F0E17;
+            --bg-dark: #1A1626;
+            --bg-deep: #24203A;
+            --bg-card: #1E1B2E;
+            --bg-elevated: #2A2640;
+            --text-primary: #FFF7F0;
+            --text-secondary: #A7A9BE;
+            --text-muted: #6B6C7F;
+            --border: #2A2640;
+            --border-light: #3A3650;
+            --shadow-lg: rgba(244, 121, 77, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+        }
+
+        button {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 14, 23, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFFFFE;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            padding: 70px 0 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 320px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 22px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-list i {
+            color: var(--primary);
+            width: 18px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           2. CSS صفحة FAQ
+           ========================================== */
+        .faq-hero {
+            padding: 160px 0 60px;
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-deep));
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(244, 121, 77, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .faq-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+        }
+
+        .faq-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+        }
+
+        /* شريط البحث */
+        .faq-search {
+            display: flex;
+            align-items: center;
+            background: rgba(15, 14, 23, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 8px 8px 24px;
+            max-width: 600px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .faq-search:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(244, 121, 77, 0.1);
+        }
+
+        .faq-search i {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .faq-search input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            padding: 12px 15px;
+        }
+
+        /* التصنيفات */
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 40px auto;
+            max-width: 900px;
+        }
+
+        .cat-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-btn i {
+            font-size: 14px;
+        }
+
+        .cat-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border-color: transparent;
+            box-shadow: 0 6px 18px var(--shadow-lg);
+        }
+
+        /* قائمة الأسئلة */
+        .faq-section {
+            padding: 60px 0 100px;
+            background: var(--bg-main);
+            min-height: 500px;
+        }
+
+        .faq-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(244, 121, 77, 0.3);
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+            background: var(--bg-elevated);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-question i {
+            color: var(--primary);
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 25px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 25px 25px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.8;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        /* لا توجد نتائج */
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .no-results h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* CTA */
+        .faq-cta {
+            background: var(--bg-dark);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .faq-cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .faq-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--shadow-lg);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .faq-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .faq-hero p {
+                font-size: 1rem;
+            }
+
+            .faq-search {
+                padding: 6px 6px 6px 18px;
+            }
+
+            .faq-search input {
+                font-size: 14px;
+            }
+
+            .faq-question {
+                padding: 18px 20px;
+                font-size: 15px;
+            }
+
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px;
+            }
+
+            .faq-answer p {
+                font-size: 14px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links,
+            .contact-list li {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ========== FAQ Hero ========== -->
+    <section class="faq-hero">
+        <div class="container">
+            <div class="faq-hero-content">
+                <h1>How can we help you today?</h1>
+                <p>Search our knowledge base or browse categories below to find answers to your questions.</p>
+
+                <div class="faq-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="faqSearch" placeholder="Search for answers (e.g. cancel, refund, visa)...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ Content ========== -->
+    <section class="faq-section">
+        <div class="container">
+
+            <!-- التصنيفات -->
+            <div class="faq-categories">
+                <button class="cat-btn active" data-category="all"><i class="fa-solid fa-layer-group"></i> All</button>
+                <button class="cat-btn" data-category="booking"><i class="fa-solid fa-suitcase"></i> Booking</button>
+                <button class="cat-btn" data-category="payment"><i class="fa-solid fa-credit-card"></i> Payment</button>
+                <button class="cat-btn" data-category="cancellation"><i class="fa-solid fa-ban"></i>
+                    Cancellation</button>
+                <button class="cat-btn" data-category="visa"><i class="fa-solid fa-passport"></i> Visa & Travel</button>
+            </div>
+
+            <!-- قائمة الأسئلة -->
+            <div class="faq-list" id="faqList">
+
+                <!-- Booking -->
+                <div class="faq-item" data-category="booking">
+                    <button class="faq-question">
+                        <span>How do I make a booking on TravelGo?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Simply browse our Destinations or Packages, select the trip you like, choose your dates and
+                            number of travelers, and proceed to checkout. You will receive a confirmation email
+                            instantly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="booking">
+                    <button class="faq-question">
+                        <span>Can I book for someone else?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, during the booking process you can enter the traveler's details different from the
+                            account holder's details. Just make sure the names match their passport exactly.</p>
+                    </div>
+                </div>
+
+                <!-- Payment -->
+                <div class="faq-item" data-category="payment">
+                    <button class="faq-question">
+                        <span>What payment methods do you accept?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We accept all major credit cards (Visa, Mastercard, American Express), PayPal, and Apple Pay.
+                            All transactions are secured with bank-level SSL encryption.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="payment">
+                    <button class="faq-question">
+                        <span>Can I pay in installments?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! For packages over $2,000, we offer 0% interest installment plans. You can choose this
+                            option at checkout.</p>
+                    </div>
+                </div>
+
+                <!-- Cancellation -->
+                <div class="faq-item" data-category="cancellation">
+                    <button class="faq-question">
+                        <span>What is your cancellation policy?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Free cancellation is available up to 48 hours before departure for most packages. After that,
+                            fees may apply depending on the hotel and airline policies.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="cancellation">
+                    <button class="faq-question">
+                        <span>How long does a refund take?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Refunds are processed within 5-7 business days and will be credited back to your original
+                            payment method.</p>
+                    </div>
+                </div>
+
+                <!-- Visa & Travel -->
+                <div class="faq-item" data-category="visa">
+                    <button class="faq-question">
+                        <span>Do I need a visa for Bali?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Many nationalities can get a Visa on Arrival (VOA) in Bali. Please check your country's
+                            specific requirements on the official Indonesian immigration website.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="visa">
+                    <button class="faq-question">
+                        <span>Is travel insurance included?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>It depends on the package. Standard and Luxury packages include comprehensive travel
+                            insurance. For Economy packages, you can add it for a small fee.</p>
+                    </div>
+                </div>
+
+                <!-- رسالة عدم وجود نتائج -->
+                <div class="no-results" id="noResults">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <h3>No results found</h3>
+                    <p>Try searching with different keywords or browse all categories.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="faq-cta">
+        <div class="container">
+            <h2>Still have questions?</h2>
+            <p>Our travel experts are available 24/7 to assist you with anything you need.</p>
+            <a href="Contact.html" class="btn-cta">Contact Support <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        // 1. Mobile Menu (تم إصلاحه وإضافته)
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navOverlay.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+        }
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        }
+
+        // 2. منطق فتح وإغلاق الأسئلة (Accordion)
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                // إغلاق كل الأسئلة الأخرى
+                faqItems.forEach(i => {
+                    if (i !== item) i.classList.remove('active');
+                });
+                // فتح/إغلاق السؤال الحالي
+                item.classList.toggle('active');
+            });
+        });
+
+        // 3. منطق الفلترة (Categories + Search)
+        const catBtns = document.querySelectorAll('.cat-btn');
+        const searchInput = document.getElementById('faqSearch');
+        const noResults = document.getElementById('noResults');
+
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        function filterFAQ() {
+            let visibleCount = 0;
+
+            faqItems.forEach(item => {
+                // التحقق من التصنيف
+                const categoryMatch = (currentCategory === 'all' || item.dataset.category === currentCategory);
+
+                // التحقق من البحث (تم إصلاحه للبحث في السؤال والإجابة)
+                const questionText = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                const searchMatch = questionText.includes(currentSearch.toLowerCase()) || answerText.includes(currentSearch.toLowerCase());
+
+                if (categoryMatch && searchMatch) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // إظهار/إخفاء رسالة "لا توجد نتائج"
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        // تفعيل التصنيفات
+        catBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                filterFAQ();
+            });
+        });
+
+        // تفعيل البحث المباشر (Live Search)
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            filterFAQ();
+        });
+    </script>
+</body>
+
+</html>

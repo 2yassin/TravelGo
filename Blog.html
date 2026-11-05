@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ملفات التصميم -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/blog.css">
+
+    <!-- ========== CSS إضافي (Back to Top + WhatsApp + Reveal) ========== -->
+    <style>
+        /* ========== Back to Top ========== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F4794D, #FBA94C);
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(244, 121, 77, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99999;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(244, 121, 77, 0.6);
+        }
+
+        /* ========== WhatsApp ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+            z-index: 99999;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            animation: none;
+            background: #20BD5A;
+        }
+
+        @keyframes pulse-whatsapp {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* ========== Scroll Reveal ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .back-to-top {
+                width: 44px;
+                height: 44px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 14px;
+            }
+
+            .whatsapp-float {
+                width: 52px;
+                height: 52px;
+                font-size: 26px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
+
+
+        /* ==========================================
+   Search Modal
+   ========================================== */
+
+        /* Modal Base */
+        .search-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 80px 20px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .search-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Overlay */
+        .search-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Content */
+        .search-modal-content {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 700px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            transform: translateY(-30px) scale(0.96);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.4s ease;
+        }
+
+        .search-modal.active .search-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Close Button */
+        .search-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .search-close:hover {
+            background: var(--primary);
+            color: #FFF;
+            border-color: transparent;
+            transform: rotate(90deg);
+        }
+
+        /* Search Input */
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(244, 121, 77, 0.1);
+            background: var(--bg-card);
+        }
+
+        .search-input-wrapper>i {
+            color: var(--primary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .search-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            min-width: 0;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .search-input-wrapper kbd {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            flex-shrink: 0;
+        }
+
+        /* Search Sections */
+        .search-section {
+            margin-bottom: 24px;
+        }
+
+        .search-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .search-section-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 14px;
+        }
+
+        .search-section-title i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        /* Popular Tags */
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .search-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-tag:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(244, 121, 77, 0.3);
+        }
+
+        /* Recent Searches */
+        .search-recent {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 13.5px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-content: space-between;
+        }
+
+        .recent-item:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .recent-item>div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .recent-item i {
+            color: var(--primary);
+            font-size: 13px;
+        }
+
+        .recent-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .recent-remove:hover {
+            color: #E85A5A;
+        }
+
+        /* Quick Links */
+        .search-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-quick-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            transform: translateX(4px);
+        }
+
+        .quick-link-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(244, 121, 77, 0.12);
+            border: 1px solid rgba(244, 121, 77, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .quick-link-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: scale(1.05);
+        }
+
+        .search-quick-link>div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-quick-link strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 3px;
+        }
+
+        .search-quick-link span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .search-quick-link .arrow {
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        /* Body Lock */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-modal {
+                padding: 70px 15px 15px;
+            }
+
+            .search-modal-content {
+                padding: 22px 18px;
+                border-radius: 20px;
+                max-height: calc(100vh - 85px);
+            }
+
+            .search-close {
+                top: 14px;
+                right: 14px;
+                width: 34px;
+                height: 34px;
+            }
+
+            .search-input-wrapper {
+                padding: 13px 16px;
+                margin-bottom: 22px;
+            }
+
+            .search-input-wrapper input {
+                font-size: 14px;
+            }
+
+            .search-input-wrapper kbd {
+                display: none;
+            }
+
+            .search-section-title {
+                font-size: 11px;
+            }
+
+            .search-tag {
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ========== Page Hero ========== -->
+    <section class="page-hero blog-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>Blog</span>
+                </nav>
+
+                <h1>Travel Stories & Guides</h1>
+                <p>Tips, guides, and inspiring stories to fuel your next adventure</p>
+
+                <div class="hero-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search articles, tips, or destinations...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Featured Post ========== -->
+    <section class="featured-post-section">
+        <div class="container">
+            <div class="featured-post reveal">
+                <div class="featured-image">
+                    <img src="img/Home/Home-main.png" alt="Bali Guide">
+                    <span class="featured-badge">
+                        <i class="fa-solid fa-star"></i> Featured
+                    </span>
+                </div>
+
+                <div class="featured-content">
+                    <div class="post-meta">
+                        <span class="post-category">
+                            <i class="fa-solid fa-compass"></i> Guides
+                        </span>
+                        <span class="post-date">
+                            <i class="fa-solid fa-calendar"></i> Oct 12, 2026
+                        </span>
+                    </div>
+
+                    <h2>The Ultimate Bali Travel Guide for 2026</h2>
+                    <p>
+                        Everything you need to know before visiting Bali — where to stay, what to eat,
+                        hidden gems, local customs, and the best time to visit. A complete guide from
+                        travelers who've been there.
+                    </p>
+
+                    <div class="post-footer">
+                        <div class="post-author">
+                            <img src="img/Home/users/6.png"
+                                alt="Sarah">
+                            <div>
+                                <strong>Sarah Johnson</strong>
+                                <span>Travel Writer</span>
+                            </div>
+                        </div>
+
+                        <a href="#" class="read-more-btn">
+                            Read Article <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Category Filter ========== -->
+    <section class="blog-filters">
+        <div class="container">
+            <div class="filters-row">
+                <div class="category-tabs">
+                    <button class="cat-btn active" data-cat="all">
+                        <i class="fa-solid fa-layer-group"></i> All Posts
+                    </button>
+                    <button class="cat-btn" data-cat="tips">
+                        <i class="fa-solid fa-lightbulb"></i> Tips
+                    </button>
+                    <button class="cat-btn" data-cat="guides">
+                        <i class="fa-solid fa-compass"></i> Guides
+                    </button>
+                    <button class="cat-btn" data-cat="stories">
+                        <i class="fa-solid fa-book-open"></i> Stories
+                    </button>
+                    <button class="cat-btn" data-cat="food">
+                        <i class="fa-solid fa-utensils"></i> Food
+                    </button>
+                    <button class="cat-btn" data-cat="budget">
+                        <i class="fa-solid fa-wallet"></i> Budget
+                    </button>
+                </div>
+
+                <div class="sort-wrapper">
+                    <label>Sort:</label>
+                    <select class="sort-select">
+                        <option>Latest</option>
+                        <option>Most Popular</option>
+                        <option>Oldest</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Blog Main ========== -->
+    <section class="blog-main-section">
+        <div class="container">
+            <div class="blog-layout">
+
+                <div class="blog-grid-wrapper">
+                    <div class="blog-grid" id="blogGrid">
+
+                        <article class="blog-card reveal" data-cat="tips">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Packing Tips.jpg"
+                                    alt="Packing Tips">
+                                <span class="blog-cat">Tips</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Oct 10, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 5 min read</span>
+                                </div>
+                                <h3>10 Smart Packing Tips for Long Trips</h3>
+                                <p>Learn how to pack light, smart, and ready for anything — without overloading your
+                                    suitcase.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/3.png"
+                                            alt="Michael">
+                                        <span>Michael Chen</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="guides">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Tokyo Guide.jpg"
+                                    alt="Tokyo Guide">
+                                <span class="blog-cat">Guides</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Oct 8, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 8 min read</span>
+                                </div>
+                                <h3>A First-Timer's Guide to Tokyo</h3>
+                                <p>Where to go, what to eat, and how to navigate the world's most exciting city.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/5.png"
+                                            alt="Emma">
+                                        <span>Tim Williams</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="stories">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Solo Travel.jpg"
+                                    alt="Solo Travel">
+                                <span class="blog-cat">Stories</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Oct 5, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 6 min read</span>
+                                </div>
+                                <h3>My Solo Journey Through Southeast Asia</h3>
+                                <p>Three months, six countries, and countless lessons learned along the way.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/6.png"
+                                            alt="Sarah">
+                                        <span>Sarah Johnson</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="food">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Street Food.jpg"
+                                    alt="Street Food">
+                                <span class="blog-cat">Food</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Oct 3, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 4 min read</span>
+                                </div>
+                                <h3>Street Food Around the World</h3>
+                                <p>From Bangkok to Mexico City — the best local dishes you must try.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/3.png"
+                                            alt="Michael">
+                                        <span>Michael Chen</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="budget">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Packing Tips.jpg"
+                                    alt="Budget Travel">
+                                <span class="blog-cat">Budget</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Sep 30, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 7 min read</span>
+                                </div>
+                                <h3>How to Travel Europe on $50 a Day</h3>
+                                <p>Smart hacks for budget travelers who still want an amazing experience.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/5.png"
+                                            alt="Emma">
+                                        <span>Tim Williams</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="tips">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Flight Tips.jpg"
+                                    alt="Flight Tips">
+                                <span class="blog-cat">Tips</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Sep 28, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 5 min read</span>
+                                </div>
+                                <h3>How to Find Cheap Flights Every Time</h3>
+                                <p>Tools, tricks, and timing strategies to save big on airfare.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/6.png"
+                                            alt="Sarah">
+                                        <span>Sarah Johnson</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="guides">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Santorini Guide.jpg"
+                                    alt="Santorini Guide">
+                                <span class="blog-cat">Guides</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Sep 25, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 6 min read</span>
+                                </div>
+                                <h3>Santorini: A Complete Island Guide</h3>
+                                <p>Where to stay, best sunsets, and hidden villages to explore.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/3.png"
+                                            alt="Michael">
+                                        <span>Michael Chen</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="stories">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Honeymoon.jpg"
+                                    alt="Honeymoon">
+                                <span class="blog-cat">Stories</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Sep 22, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 5 min read</span>
+                                </div>
+                                <h3>Our Dream Honeymoon in the Maldives</h3>
+                                <p>A personal story of love, sunsets, and unforgettable memories.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/5.png"
+                                            alt="Emma">
+                                        <span>Tim Williams</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="blog-card reveal" data-cat="food">
+                            <div class="blog-image">
+                                <img src="img/Home/blog/Japanese Food.jpg"
+                                    alt="Japanese Food">
+                                <span class="blog-cat">Food</span>
+                            </div>
+                            <div class="blog-body">
+                                <div class="blog-meta">
+                                    <span><i class="fa-solid fa-calendar"></i> Sep 20, 2026</span>
+                                    <span><i class="fa-solid fa-clock"></i> 6 min read</span>
+                                </div>
+                                <h3>A Food Lover's Guide to Japan</h3>
+                                <p>From sushi to ramen — the ultimate culinary journey through Japan.</p>
+                                <div class="blog-footer">
+                                    <div class="blog-author">
+                                        <img src="img/Home/users/6.png"
+                                            alt="Sarah">
+                                        <span>Sarah Johnson</span>
+                                    </div>
+                                    <a href="#" class="blog-read">
+                                        Read <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination reveal">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <span class="page-dots">...</span>
+                        <button class="page-btn">8</button>
+                        <button class="page-btn next">
+                            Next <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========== Sidebar ========== -->
+                <aside class="blog-sidebar">
+
+                    <!-- About Widget -->
+                    <div class="widget widget-about reveal">
+                        <div class="widget-avatar">
+                            <img src="img/Home/users/6.png"
+                                alt="Sarah">
+                        </div>
+                        <h4>Sarah Johnson</h4>
+                        <p>Travel writer & adventure seeker sharing stories from around the world.</p>
+                        <div class="social-links-sm">
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Popular Posts -->
+                    <div class="widget reveal">
+                        <h4 class="widget-title">
+                            <i class="fa-solid fa-fire"></i> Popular Posts
+                        </h4>
+                        <div class="popular-posts">
+                            <a href="#" class="popular-post">
+                                <img src="img/Home/packages/Economy.jpg"
+                                    alt="Bali">
+                                <div>
+                                    <h5>Bali Travel Guide 2026</h5>
+                                    <span><i class="fa-solid fa-eye"></i> 12.4k views</span>
+                                </div>
+                            </a>
+
+                            <a href="#" class="popular-post">
+                                <img src="img/Home/blog/Tokyo Guide.jpg"
+                                    alt="Tokyo">
+                                <div>
+                                    <h5>Tokyo First-Timer's Guide</h5>
+                                    <span><i class="fa-solid fa-eye"></i> 9.8k views</span>
+                                </div>
+                            </a>
+
+                            <a href="#" class="popular-post">
+                                <img src="img/Home/blog/Packing Tips.jpg"
+                                    alt="Packing">
+                                <div>
+                                    <h5>Smart Packing Tips</h5>
+                                    <span><i class="fa-solid fa-eye"></i> 8.2k views</span>
+                                </div>
+                            </a>
+
+                            <a href="#" class="popular-post">
+                                <img src="img/Home/blog/Flight Tips.jpg"
+                                    alt="Flights">
+                                <div>
+                                    <h5>Cheap Flights Guide</h5>
+                                    <span><i class="fa-solid fa-eye"></i> 7.5k views</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="widget reveal">
+                        <h4 class="widget-title">
+                            <i class="fa-solid fa-folder"></i> Categories
+                        </h4>
+                        <ul class="category-list">
+                            <li>
+                                <a href="#">
+                                    <span><i class="fa-solid fa-compass"></i> Guides</span>
+                                    <span class="cat-count">24</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span><i class="fa-solid fa-lightbulb"></i> Tips</span>
+                                    <span class="cat-count">18</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span><i class="fa-solid fa-book-open"></i> Stories</span>
+                                    <span class="cat-count">12</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span><i class="fa-solid fa-utensils"></i> Food</span>
+                                    <span class="cat-count">9</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span><i class="fa-solid fa-wallet"></i> Budget</span>
+                                    <span class="cat-count">7</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="widget reveal">
+                        <h4 class="widget-title">
+                            <i class="fa-solid fa-tags"></i> Tags
+                        </h4>
+                        <div class="tags-cloud">
+                            <a href="#" class="tag">Bali</a>
+                            <a href="#" class="tag">Tokyo</a>
+                            <a href="#" class="tag">Europe</a>
+                            <a href="#" class="tag">Beaches</a>
+                            <a href="#" class="tag">Hiking</a>
+                            <a href="#" class="tag">Budget</a>
+                            <a href="#" class="tag">Luxury</a>
+                            <a href="#" class="tag">Solo</a>
+                            <a href="#" class="tag">Family</a>
+                            <a href="#" class="tag">Food</a>
+                            <a href="#" class="tag">Adventure</a>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Mini -->
+                    <div class="widget widget-newsletter reveal">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <h4>Get Travel Tips</h4>
+                        <p>Weekly stories & tips in your inbox</p>
+                        <form>
+                            <input type="email" placeholder="Your email">
+                            <button type="submit">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </aside>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== Back to Top ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- ========== WhatsApp Float ========== -->
+    <a href="https://wa.me/306986387315" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <!-- ========== Search Modal ========== -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-overlay" id="searchOverlay"></div>
+        <div class="search-modal-content">
+            <button class="search-close" id="searchClose" aria-label="Close">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search destinations, packages, articles..." autofocus>
+                <kbd>ESC</kbd>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-fire"></i> Popular Searches
+                </h4>
+                <div class="search-tags">
+                    <button class="search-tag" data-search="Bali">Bali, Indonesia</button>
+                    <button class="search-tag" data-search="Paris">Paris, France</button>
+                    <button class="search-tag" data-search="Tokyo">Tokyo, Japan</button>
+                    <button class="search-tag" data-search="Maldives">Maldives</button>
+                    <button class="search-tag" data-search="Dubai">Dubai, UAE</button>
+                    <button class="search-tag" data-search="Santorini">Santorini, Greece</button>
+                </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="search-section" id="recentSection" style="display: none;">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Searches
+                </h4>
+                <div class="search-recent" id="recentList"></div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-bolt"></i> Quick Links
+                </h4>
+                <div class="search-quick-links">
+                    <a href="Destinations.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <strong>All Destinations</strong>
+                            <span>Browse 150+ places</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Packages.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <div>
+                            <strong>Packages</strong>
+                            <span>Economy, Standard, Luxury</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Blog.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <strong>Travel Blog</strong>
+                            <span>Guides & stories</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ========== Scripts ========== -->
+    <script>
+        /* ==========================================
+           1. Mobile Menu
+           ========================================== */
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
+
+        /* ==========================================
+           2. Navbar Scroll
+           ========================================== */
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        /* ==========================================
+           3. Category Filter
+           ========================================== */
+        const catBtns = document.querySelectorAll('.cat-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        catBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const cat = btn.dataset.cat;
+
+                blogCards.forEach(card => {
+                    if (cat === 'all' || card.dataset.cat === cat) {
+                        card.style.display = 'flex';
+                        card.style.animation = 'fadeIn 0.4s ease-out';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        /* ==========================================
+           4. Pagination
+           ========================================== */
+        document.querySelectorAll('.page-btn:not(.next)').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        /* ==========================================
+           5. Back to Top
+           ========================================== */
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        /* ==========================================
+           6. Scroll Reveal
+           ========================================== */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -60px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+    <script>
+        /* ==========================================
+   Search Modal
+   ========================================== */
+        (function () {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchModal = document.getElementById('searchModal');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchClose = document.getElementById('searchClose');
+            const searchInput = document.getElementById('searchInput');
+            const searchTags = document.querySelectorAll('.search-tag');
+            const recentSection = document.getElementById('recentSection');
+            const recentList = document.getElementById('recentList');
+
+            // لو مش موجود في الصفحة (لأن زر البحث موجود)
+            if (!searchBtn || !searchModal) return;
+
+            // الملف: صفحة نبحث عنها
+            const SEARCH_DATA = {
+                'bali': 'Details.html',
+                'paris': 'Destinations.html',
+                'tokyo': 'Destinations.html',
+                'maldives': 'Destinations.html',
+                'dubai': 'Destinations.html',
+                'santorini': 'Destinations.html',
+                'packages': 'Packages.html',
+                'booking': 'Booking.html',
+                'blog': 'Blog.html',
+                'about': 'About.html',
+                'contact': 'Contact.html'
+            };
+
+            // ========== Open Modal ==========
+            function openModal() {
+                searchModal.classList.add('active');
+                document.body.classList.add('modal-open');
+                setTimeout(() => searchInput.focus(), 300);
+                loadRecent();
+            }
+
+            // ========== Close Modal ==========
+            function closeModal() {
+                searchModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                searchInput.value = '';
+            }
+
+            // ========== Save Search ==========
+            function saveSearch(query) {
+                if (!query || query.trim().length < 2) return;
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                recent = recent.filter(item => item.toLowerCase() !== query.toLowerCase());
+                recent.unshift(query);
+                recent = recent.slice(0, 5);
+                localStorage.setItem('travelgo_recent', JSON.stringify(recent));
+            }
+
+            // ========== Load Recent ==========
+            function loadRecent() {
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                if (recent.length === 0) {
+                    recentSection.style.display = 'none';
+                    return;
+                }
+                recentSection.style.display = 'block';
+                recentList.innerHTML = '';
+                recent.forEach((term, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'recent-item';
+                    item.innerHTML = `
+                <div>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>${term}</span>
+                </div>
+                <button class="recent-remove" data-index="${index}" aria-label="Remove">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            `;
+                    recentList.appendChild(item);
+
+                    // Click to search
+                    item.addEventListener('click', (e) => {
+                        if (e.target.closest('.recent-remove')) return;
+                        performSearch(term);
+                    });
+
+                    // Remove
+                    const removeBtn = item.querySelector('.recent-remove');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        let current = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                        current.splice(index, 1);
+                        localStorage.setItem('travelgo_recent', JSON.stringify(current));
+                        loadRecent();
+                    });
+                });
+            }
+
+            // ========== Perform Search ==========
+            function performSearch(query) {
+                if (!query || query.trim().length === 0) return;
+                saveSearch(query);
+                const lowerQuery = query.toLowerCase().trim();
+
+                // Find in SEARCH_DATA
+                for (const key in SEARCH_DATA) {
+                    if (lowerQuery.includes(key) || key.includes(lowerQuery)) {
+                        window.location.href = SEARCH_DATA[key];
+                        return;
+                    }
+                }
+
+                // Fallback: go to destinations
+                window.location.href = 'Destinations.html';
+            }
+
+            // ========== Event Listeners ==========
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+
+            searchClose.addEventListener('click', closeModal);
+            searchOverlay.addEventListener('click', closeModal);
+
+            // ESC to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Enter to search
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Popular Tags click
+            searchTags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const search = tag.dataset.search;
+                    searchInput.value = search;
+                    performSearch(search);
+                });
+            });
+
+            // Ctrl+K / Cmd+K to open
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openModal();
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

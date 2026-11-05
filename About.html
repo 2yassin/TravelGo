@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — TravelGo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/about.css">
+
+    <style>
+        /* ==========================================
+   Search Modal
+   ========================================== */
+
+        /* Modal Base */
+        .search-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 80px 20px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .search-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Overlay */
+        .search-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Content */
+        .search-modal-content {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 700px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            transform: translateY(-30px) scale(0.96);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.4s ease;
+        }
+
+        .search-modal.active .search-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Close Button */
+        .search-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .search-close:hover {
+            background: var(--primary);
+            color: #FFF;
+            border-color: transparent;
+            transform: rotate(90deg);
+        }
+
+        /* Search Input */
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(244, 121, 77, 0.1);
+            background: var(--bg-card);
+        }
+
+        .search-input-wrapper>i {
+            color: var(--primary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .search-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            min-width: 0;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .search-input-wrapper kbd {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            flex-shrink: 0;
+        }
+
+        /* Search Sections */
+        .search-section {
+            margin-bottom: 24px;
+        }
+
+        .search-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .search-section-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 14px;
+        }
+
+        .search-section-title i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        /* Popular Tags */
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .search-tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-tag:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(244, 121, 77, 0.3);
+        }
+
+        /* Recent Searches */
+        .search-recent {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 13.5px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-content: space-between;
+        }
+
+        .recent-item:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .recent-item>div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .recent-item i {
+            color: var(--primary);
+            font-size: 13px;
+        }
+
+        .recent-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .recent-remove:hover {
+            color: #E85A5A;
+        }
+
+        /* Quick Links */
+        .search-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-quick-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover {
+            border-color: var(--primary);
+            background: var(--bg-card);
+            transform: translateX(4px);
+        }
+
+        .quick-link-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(244, 121, 77, 0.12);
+            border: 1px solid rgba(244, 121, 77, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .quick-link-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFF;
+            transform: scale(1.05);
+        }
+
+        .search-quick-link>div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-quick-link strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 3px;
+        }
+
+        .search-quick-link span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .search-quick-link .arrow {
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .search-quick-link:hover .arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        /* Body Lock */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-modal {
+                padding: 70px 15px 15px;
+            }
+
+            .search-modal-content {
+                padding: 22px 18px;
+                border-radius: 20px;
+                max-height: calc(100vh - 85px);
+            }
+
+            .search-close {
+                top: 14px;
+                right: 14px;
+                width: 34px;
+                height: 34px;
+            }
+
+            .search-input-wrapper {
+                padding: 13px 16px;
+                margin-bottom: 22px;
+            }
+
+            .search-input-wrapper input {
+                font-size: 14px;
+            }
+
+            .search-input-wrapper kbd {
+                display: none;
+            }
+
+            .search-section-title {
+                font-size: 11px;
+            }
+
+            .search-tag {
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== Navbar ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span>Travel</span>Go
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="Packages.html" class="nav-link">Packages</a></li>
+                <li><a href="Booking.html" class="nav-link">Booking</a></li>
+                <li><a href="Blog.html" class="nav-link">Blog</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="Contact.html" class="search-btn" style="font-size: 16px; margin-right: 5px;"><i
+                        class="fa-regular fa-envelope"></i></a>
+                <a href="Auth.html" class="btn-contact">Sign In/Up</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ========== Page Hero ========== -->
+    <section class="page-hero about-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <span>About Us</span>
+                </nav>
+
+                <h1>We Make Travel Unforgettable</h1>
+                <p>Since 2018, TravelGo has been helping travelers explore the world with confidence and joy</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Our Story ========== -->
+    <section class="story-section section">
+        <div class="container">
+            <div class="story-layout">
+
+                <!-- Story Text -->
+                <div class="story-content reveal">
+                    <span class="section-tag">Our Story</span>
+                    <h2 class="story-title">Born From a Passion for Adventure</h2>
+
+                    <p class="story-text">
+                        TravelGo started in 2018 with a simple idea: <strong>travel should be easy, affordable, and
+                            unforgettable</strong>. What began as a small team of three travel enthusiasts has grown
+                        into a global platform serving thousands of travelers every year.
+                    </p>
+
+                    <p class="story-text">
+                        We believe that every journey — whether it's a weekend escape or a once-in-a-lifetime adventure
+                        — deserves to be planned with care. That's why we've built a platform that combines the best
+                        destinations, curated packages, and expert local knowledge, all in one place.
+                    </p>
+
+                    <p class="story-text">
+                        Today, TravelGo connects travelers with over <strong>150+ destinations</strong> across
+                        <strong>60+ countries</strong>, with a team of passionate experts who live and breathe travel.
+                    </p>
+
+                    <!-- Stats -->
+                    <div class="story-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="150">150+</span>
+                            <span class="stat-label">Destinations</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="60">60+</span>
+                            <span class="stat-label">Countries</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="50">50K+</span>
+                            <span class="stat-label">Happy Travelers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="8">8+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story Images -->
+                <div class="story-images reveal">
+                    <div class="story-img main">
+                        <img src="img/Home/blog/Packing Tips.jpg" alt="Travel">
+                    </div>
+                    <div class="story-img secondary">
+                        <img src="img/Home/packages/Economy.jpg" alt="Bali">
+                    </div>
+                    <div class="story-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <div>
+                            <strong>Best Travel Agency</strong>
+                            <span>Award 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Vision & Mission ========== -->
+    <section class="vision-section section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Our Purpose</span>
+                <h2 class="section-title">Vision & Mission</h2>
+                <p class="section-subtitle">
+                    The principles that guide everything we do
+                </p>
+            </div>
+
+            <div class="vision-grid">
+                <div class="vision-card reveal">
+                    <div class="vision-icon">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>
+                        To become the world's most trusted travel platform — connecting people with extraordinary
+                        journeys, creating memories that last a lifetime, and making travel accessible to everyone.
+                    </p>
+                </div>
+
+                <div class="vision-card reveal">
+                    <div class="vision-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>
+                        To simplify travel planning through a seamless platform, curated experiences, and personalized
+                        support — so every traveler can focus on what truly matters: the adventure itself.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Core Values ========== -->
+    <section class="values-section section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">What We Stand For</span>
+                <h2 class="section-title">Our Core Values</h2>
+                <p class="section-subtitle">
+                    The values that shape our culture and guide our decisions
+                </p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card reveal">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3>Passion</h3>
+                    <p>We love what we do. Every trip we help plan is treated with the same enthusiasm as if it were our
+                        own.</p>
+                </div>
+
+                <div class="value-card reveal">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3>Trust</h3>
+                    <p>Transparency, honesty, and reliability are at the heart of every interaction we have with our
+                        travelers.</p>
+                </div>
+
+                <div class="value-card reveal">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We're constantly improving our platform to make travel planning more intuitive and enjoyable.</p>
+                </div>
+
+                <div class="value-card reveal">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <h3>Sustainability</h3>
+                    <p>We believe in responsible travel that respects local cultures, communities, and the environment.
+                    </p>
+                </div>
+
+                <div class="value-card reveal">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3>Community</h3>
+                    <p>We build lasting relationships with travelers, partners, and local communities around the world.
+                    </p>
+                </div>
+
+                <div class="value-card reveal">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3>Excellence</h3>
+                    <p>We never settle for average. From the smallest detail to the biggest adventure, we aim for
+                        excellence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Meet the Team ========== -->
+    <section class="team-section section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">The People Behind TravelGo</span>
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-subtitle">
+                    A diverse team of travel experts, designers, and adventurers
+                </p>
+            </div>
+
+            <div class="team-grid">
+
+                <!-- Team Member 1 -->
+                <div class="team-card reveal">
+                    <div class="team-image">
+                        <img src="img/Home/users/1.png"
+                            alt="Alex Morgan">
+                        <div class="team-socials">
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Alex Morgan</h3>
+                        <span class="team-role">Founder & CEO</span>
+                        <p>Traveled to 60+ countries. Passionate about making travel accessible to everyone.</p>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card reveal">
+                    <div class="team-image">
+                        <img src="img/Home/users/7.jpeg"
+                            alt="Sophia Chen">
+                        <div class="team-socials">
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Sophia Chen</h3>
+                        <span class="team-role">Head of Destinations</span>
+                        <p>Curates unique travel experiences and manages our global network of partners.</p>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="team-card reveal">
+                    <div class="team-image">
+                        <img src="img/Home/users/3.png"
+                            alt="David Kim">
+                        <div class="team-socials">
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>David Kim</h3>
+                        <span class="team-role">CTO & Co-Founder</span>
+                        <p>Builds the technology that makes TravelGo fast, secure, and delightful to use.</p>
+                    </div>
+                </div>
+
+                <!-- Team Member 4 -->
+                <div class="team-card reveal">
+                    <div class="team-image">
+                        <img src="img/Home/users/6.png"
+                            alt="Emma Williams">
+                        <div class="team-socials">
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Emma Williams</h3>
+                        <span class="team-role">Head of Customer Success</span>
+                        <p>Ensures every traveler has a smooth, memorable experience from start to finish.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Timeline (Our Journey) ========== -->
+    <section class="timeline-section section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Our Journey</span>
+                <h2 class="section-title">How We Got Here</h2>
+                <p class="section-subtitle">
+                    Key milestones in our journey of making travel better
+                </p>
+            </div>
+
+            <div class="timeline">
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-content">
+                        <h3>The Beginning</h3>
+                        <p>TravelGo was founded by three travel enthusiasts with a simple vision: make travel planning
+                            effortless and enjoyable.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>Going Global</h3>
+                        <p>Expanded to over 30 countries and launched our signature curated packages and expert-led
+                            tours.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3>Digital Transformation</h3>
+                        <p>Introduced a fully redesigned booking platform with instant confirmation and 24/7 support.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3>50,000 Travelers</h3>
+                        <p>Reached a milestone of 50,000+ happy travelers and earned multiple industry awards.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-content">
+                        <h3>The Future</h3>
+                        <p>Continuing to innovate with AI-powered recommendations and sustainable travel initiatives.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Why Choose Us ========== -->
+    <section class="why-section section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Why TravelGo</span>
+                <h2 class="section-title">Why Choose Us?</h2>
+                <p class="section-subtitle">
+                    Here's what sets us apart from the rest
+                </p>
+            </div>
+
+            <div class="why-grid">
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <h3>150+ Destinations</h3>
+                    <p>Curated destinations across 60+ countries, from hidden gems to iconic landmarks.</p>
+                </div>
+
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    <h3>Best Price Guarantee</h3>
+                    <p>We offer competitive prices and exclusive deals you won't find anywhere else.</p>
+                </div>
+
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is always available to help — before, during, and after your trip.</p>
+                </div>
+
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>Bank-level encryption and trusted payment methods keep your data safe.</p>
+                </div>
+
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </div>
+                    <h3>Free Cancellation</h3>
+                    <p>Flexible cancellation policies so you can plan with peace of mind.</p>
+                </div>
+
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3>Award-Winning Service</h3>
+                    <p>Recognized by industry leaders for excellence in travel experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA Banner ========== -->
+    <section class="cta-banner section">
+        <div class="container">
+            <div class="cta-banner-box reveal">
+                <div class="cta-banner-content">
+                    <span class="cta-tag">Ready to Travel?</span>
+                    <h2>Let's Plan Your Next Adventure Together</h2>
+                    <p>Join thousands of travelers who've discovered the world with TravelGo.</p>
+                    <div class="cta-banner-buttons">
+                        <a href="destinations.html" class="btn-cta-primary">
+                            <i class="fa-solid fa-compass"></i> Explore Destinations
+                        </a>
+                        <a href="#" class="btn-cta-secondary">
+                            <i class="fa-solid fa-phone"></i> Contact Us
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-banner-decoration">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <a href="#" class="footer-brand"><span>Travel</span>Go</a>
+                    <p>Your trusted partner for unforgettable journeys around the world. We make travel easy,
+                        affordable, and memorable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="About.html">About Us</a></li>
+                        <li><a href="Careers.html">Careers</a></li>
+                        <li><a href="Press.html">Press</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="Help Center.html">Help Center</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li> <!-- هذا الرابط -->
+                        <li><a href="Privacy.html">Privacy Policy</a></li>
+                        <li><a href="MyAccount.html">My Account</a></li> <!-- ضيف هذا -->
+                        <li><a href="FAQ.html">FAQ</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> 123 Travel St, City</li>
+                        <li><i class="fa-solid fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fa-solid fa-envelope"></i> hello@travelgo.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 TravelGo. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== Back to Top ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- ========== WhatsApp Float ========== -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <!-- ========== Search Modal ========== -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-overlay" id="searchOverlay"></div>
+        <div class="search-modal-content">
+            <button class="search-close" id="searchClose" aria-label="Close">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search destinations, packages, articles..." autofocus>
+                <kbd>ESC</kbd>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-fire"></i> Popular Searches
+                </h4>
+                <div class="search-tags">
+                    <button class="search-tag" data-search="Bali">Bali, Indonesia</button>
+                    <button class="search-tag" data-search="Paris">Paris, France</button>
+                    <button class="search-tag" data-search="Tokyo">Tokyo, Japan</button>
+                    <button class="search-tag" data-search="Maldives">Maldives</button>
+                    <button class="search-tag" data-search="Dubai">Dubai, UAE</button>
+                    <button class="search-tag" data-search="Santorini">Santorini, Greece</button>
+                </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="search-section" id="recentSection" style="display: none;">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Searches
+                </h4>
+                <div class="search-recent" id="recentList"></div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="search-section">
+                <h4 class="search-section-title">
+                    <i class="fa-solid fa-bolt"></i> Quick Links
+                </h4>
+                <div class="search-quick-links">
+                    <a href="Destinations.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <strong>All Destinations</strong>
+                            <span>Browse 150+ places</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Packages.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <div>
+                            <strong>Packages</strong>
+                            <span>Economy, Standard, Luxury</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                    <a href="Blog.html" class="search-quick-link">
+                        <div class="quick-link-icon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <strong>Travel Blog</strong>
+                            <span>Guides & stories</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ========== Scripts ========== -->
+    <script>
+        /* ========== Mobile Menu ========== */
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
+
+        /* ========== Back to Top ========== */
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 500);
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* ========== Scroll Reveal Animations ========== */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        /* ========== Counter Animation ========== */
+        const counters = document.querySelectorAll('.stat-number');
+        let countersStarted = false;
+
+        function startCounters() {
+            if (countersStarted) return;
+            countersStarted = true;
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.count);
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const suffix = counter.textContent.includes('K') ? 'K+' :
+                    counter.textContent.includes('+') ? '+' : '';
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current) + suffix;
+                }, 16);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const storyStats = document.querySelector('.story-stats');
+            if (storyStats) {
+                const rect = storyStats.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    startCounters();
+                }
+            }
+        });
+
+        // Trigger on load if already in view
+        setTimeout(() => {
+            const storyStats = document.querySelector('.story-stats');
+            if (storyStats) {
+                const rect = storyStats.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    startCounters();
+                }
+            }
+        }, 500);
+    </script>
+    <script>
+        /* ==========================================
+   Search Modal
+   ========================================== */
+        (function () {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchModal = document.getElementById('searchModal');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchClose = document.getElementById('searchClose');
+            const searchInput = document.getElementById('searchInput');
+            const searchTags = document.querySelectorAll('.search-tag');
+            const recentSection = document.getElementById('recentSection');
+            const recentList = document.getElementById('recentList');
+
+            // لو مش موجود في الصفحة (لأن زر البحث موجود)
+            if (!searchBtn || !searchModal) return;
+
+            // الملف: صفحة نبحث عنها
+            const SEARCH_DATA = {
+                'bali': 'Details.html',
+                'paris': 'Destinations.html',
+                'tokyo': 'Destinations.html',
+                'maldives': 'Destinations.html',
+                'dubai': 'Destinations.html',
+                'santorini': 'Destinations.html',
+                'packages': 'Packages.html',
+                'booking': 'Booking.html',
+                'blog': 'Blog.html',
+                'about': 'About.html',
+                'contact': 'Contact.html'
+            };
+
+            // ========== Open Modal ==========
+            function openModal() {
+                searchModal.classList.add('active');
+                document.body.classList.add('modal-open');
+                setTimeout(() => searchInput.focus(), 300);
+                loadRecent();
+            }
+
+            // ========== Close Modal ==========
+            function closeModal() {
+                searchModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                searchInput.value = '';
+            }
+
+            // ========== Save Search ==========
+            function saveSearch(query) {
+                if (!query || query.trim().length < 2) return;
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                recent = recent.filter(item => item.toLowerCase() !== query.toLowerCase());
+                recent.unshift(query);
+                recent = recent.slice(0, 5);
+                localStorage.setItem('travelgo_recent', JSON.stringify(recent));
+            }
+
+            // ========== Load Recent ==========
+            function loadRecent() {
+                let recent = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                if (recent.length === 0) {
+                    recentSection.style.display = 'none';
+                    return;
+                }
+                recentSection.style.display = 'block';
+                recentList.innerHTML = '';
+                recent.forEach((term, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'recent-item';
+                    item.innerHTML = `
+                <div>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>${term}</span>
+                </div>
+                <button class="recent-remove" data-index="${index}" aria-label="Remove">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            `;
+                    recentList.appendChild(item);
+
+                    // Click to search
+                    item.addEventListener('click', (e) => {
+                        if (e.target.closest('.recent-remove')) return;
+                        performSearch(term);
+                    });
+
+                    // Remove
+                    const removeBtn = item.querySelector('.recent-remove');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        let current = JSON.parse(localStorage.getItem('travelgo_recent') || '[]');
+                        current.splice(index, 1);
+                        localStorage.setItem('travelgo_recent', JSON.stringify(current));
+                        loadRecent();
+                    });
+                });
+            }
+
+            // ========== Perform Search ==========
+            function performSearch(query) {
+                if (!query || query.trim().length === 0) return;
+                saveSearch(query);
+                const lowerQuery = query.toLowerCase().trim();
+
+                // Find in SEARCH_DATA
+                for (const key in SEARCH_DATA) {
+                    if (lowerQuery.includes(key) || key.includes(lowerQuery)) {
+                        window.location.href = SEARCH_DATA[key];
+                        return;
+                    }
+                }
+
+                // Fallback: go to destinations
+                window.location.href = 'Destinations.html';
+            }
+
+            // ========== Event Listeners ==========
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+
+            searchClose.addEventListener('click', closeModal);
+            searchOverlay.addEventListener('click', closeModal);
+
+            // ESC to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Enter to search
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Popular Tags click
+            searchTags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const search = tag.dataset.search;
+                    searchInput.value = search;
+                    performSearch(search);
+                });
+            });
+
+            // Ctrl+K / Cmd+K to open
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openModal();
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
